@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>  
+    <script src="bower_components/platform/platform.js"></script>
+    <script src="js/angular.js" type="text/javascript"></script>
+    <script src="js/angular-route.js" type="text/javascript"></script>
+    <script src="js/app.js" type="text/javascript"></script>
+    
+    <link rel="import" href="bower_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+    <link rel="import" href="bower_components/core-menu/core-menu.html">
+    <link rel="import" href="bower_components/core-item/core-item.html">
+  </head>
+  <body ng-controller="appCtrl">
+    <div id="applicationContainer">
+      <core-scaffold>
+        <core-header-panel navigation flex mode="seamed">
+          <core-toolbar>Application</core-toolbar>
+          <core-menu theme="core-light-theme">
+            <core-item icon="settings" label="item1"></core-item>
+            <core-item icon="settings" label="item2"></core-item>
+          </core-menu>
+        </core-header-panel>
+        <div tool>SocietyPro Groups and Governance</div>
+        <div>Content goes here...</div>
+      </core-scaffold>
+    </div>
+  </body>
+</html>
