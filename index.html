@@ -13,6 +13,7 @@
   </head>
   <body ng-controller="appCtrl">
     <div id="applicationContainer">
+      some content
       <core-scaffold>
         <core-header-panel navigation flex mode="seamed">
           <core-toolbar>Application</core-toolbar>
@@ -21,9 +22,15 @@
             <core-item icon="settings" label="item2"></core-item>
           </core-menu>
         </core-header-panel>
-        <div tool>SocietyPro Groups and Governance</div>
+        <div id="toolTitle" tool>SocietyPro Groups and Governance</div>
         <div>Content goes here...</div>
       </core-scaffold>
     </div>
+    <script>
+      var soProTestsReady = false;
+      document.addEventListener("polymer-ready", function () {
+        soProTestsReady = true;
+      });
+    </script>
   </body>
 </html>
