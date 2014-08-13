@@ -1,13 +1,10 @@
-<!-- Make sure platform.js and polymer.html are loaded before creating custom
-elements. You can load them from a parent file. -->
-
-<link rel="import" 
-  href="bower_components/polymer/polymer.html">
-
 <!-- Import any child components you need -->
-
 <link rel="import"
-  href="bower_components/core-icons/core-icons.html">
+  href="../../bower_components/core-icons/core-icons.html">
+<link rel="import"
+  href="../../bower_components/core-icon-button/core-icon-button.html">
+<link rel="import"
+  href="../../bower_components/paper-input/paper-input.html">
 
 
 <!-- 
@@ -22,8 +19,7 @@ and http://www.polymer-project.org/docs/polymer/polymer.html
 -->
 
 <polymer-element 
-name="wiki-index" 
-attributes="appTitle rootId"
+name="group-card-titlebar" 
 >
   <!-- 
   Declare a <template><div#ShadowDomDivs></div></template> tree
@@ -35,23 +31,27 @@ attributes="appTitle rootId"
       :host{
         display: block;
         position: relative;
-        height: 100%;
-        width: 100%;
+        width: 600px; 
+        margin: auto;
+      }
+      @media screen and (max-width < 600px){
+        :host{
+          display: block;
+          position: relative;
+          width: 100%;
+        }
       }
 
       /* Style a child element declared in the template */
       #wikiTitle{text-align: center}
     </style>
 
-    <div id="wikiTitle" flex>
-      <span>{{appTitle}}</span>
-    </div>
+    <div layout horizontal>
+    <paper-input block flex label="Type a name for a New Group..." id="titleInput">
+      {{title}}
+      <core-icon-button icon="save" on-click="{{fireCreate}}"></core-icon-button>
+    </paper-input>
 
-    <!-- 
-    As long as you imported them with <link rel="import" href=""> you can use tags
-    defined by other components:
-    -->
-    <wiki-page pageid="{{rootId}}"> </wiki-page>
   </template>
 
   <!-- 
@@ -61,13 +61,23 @@ attributes="appTitle rootId"
   http://www.polymer-project.org/docs/polymer/polymer.html
   -->
   <script>
-    Polymer('wiki-index', {
+    Polymer('group-card-titlebar', {
       publish: { // If you want to expose properties as tag attributes
-        appTitle: 'Society Pro Wiki',
-        rootId: 'root',
+        title: null,
       },
-      addPage: function(){
-        // A custom function that you can call as <child-tag on-click="{{addPage}}">
+      attached: function(){
+        var that = this;
+        this.$.titleInput.addEventListener('keydown', function(e){
+          if(that.title === null || that.title === ""){
+            return;
+          };
+          if(e.which === 13){
+            that.fireCreate();
+          };
+        });
+      },
+      fireCreate: function(){
+        this.fire('group-card-create', {title: this.title});
       },
     });
   </script>
