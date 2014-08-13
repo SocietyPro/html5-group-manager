@@ -10,18 +10,25 @@
     <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
     <link rel="import" href="bower_components/core-menu/core-menu.html">
     <link rel="import" href="bower_components/core-item/core-item.html">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
   <body ng-controller="appCtrl">
     <div id="applicationContainer">
-      <core-scaffold id="groupScaffold">
-        <core-header-panel navigation flex mode="seemed">
+      <core-scaffold id="groupScaffold" narrow="true">
+        <core-header-panel navigation flex mode="seamed">
           <core-toolbar>Groups</core-toolbar>
           <core-menu theme="core-light-theme">
             <core-item icon="settings" label="item1"></core-item>
             <core-item icon="settings" label="item2"></core-item>
           </core-menu>
         </core-header-panel>
-        <div id="toolTitle" tool>SocietyPro Groups and Governance</div>
+        <div class="mainTitle" tool>
+            SocietyPro Groups and Governance
+        </div>
+        <div id="listMorphButtons" tool horizontal layout>
+          <core-icon-button id="listButton" icon="view-stream"></core-icon-button>
+          <core-icon-button id="gridButton" icon="view-quilt"></core-icon-button>
+        </div>
         <div>Content goes here...</div>
       </core-scaffold>
     </div>
