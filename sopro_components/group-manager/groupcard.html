@@ -25,24 +25,24 @@ and http://www.polymer-project.org/docs/polymer/polymer.html
 name="wiki-index" 
 attributes="appTitle rootId"
 >
-  <style>
-    /* Style this element itself to fill its position: relative container: */
-    :host{
-      display: block;
-      position: relative;
-      height: 100%;
-      width: 100%;
-    }
-
-    /* Style a child element declared in the template */
-    #wikiTitle{text-align: center}
-  </style>
-
   <!-- 
   Declare a <template><div#ShadowDomDivs></div></template> tree
   You can use {{dataBinding}} syntax in attributes and text nodes, maybe elsewhere?
   -->
   <template>
+    <style>
+      /* Style this element itself to fill its position: relative container: */
+      :host{
+        display: block;
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+
+      /* Style a child element declared in the template */
+      #wikiTitle{text-align: center}
+    </style>
+
     <div id="wikiTitle" flex>
       <span>{{appTitle}}</span>
     </div>
