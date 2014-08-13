@@ -11,7 +11,7 @@
     <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
     <link rel="import" href="bower_components/core-menu/core-menu.html">
     <link rel="import" href="bower_components/core-item/core-item.html">
-    <link rel="import" href="sopro_components/sopro-generic-card/sopro-generic-card.html">
+    <link rel="import" href="sopro_components/sopro-card/sopro-card.html">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
   <body ng-controller="appCtrl">
@@ -32,7 +32,10 @@
           <core-icon-button id="gridButton" icon="view-quilt"></core-icon-button>
         </div>
         <div layout vertical center>
-          <sopro-generic-card>Some card stuff...</sopro-generic-card>
+          <sopro-card>
+          <h2>A Card Title</h2>
+          Some card stuff...
+          </sopro-card>
         </div>
       </core-scaffold>
     </div>
