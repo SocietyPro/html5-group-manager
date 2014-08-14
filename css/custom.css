@@ -1,6 +1,9 @@
 body{
   font-family: "RobotoDraft"
 }
+sopro-card{
+  margin-bottom: 8px;
+}
 #titleText {
   float: left;
   vertical-align: middle;

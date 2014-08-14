@@ -151,6 +151,9 @@ polyfill-next-selector { content: ':host .narrow-layout > #main > [main]'; }
 #main #mainPanel {
   margin-left: 256px;
 }
+.narrow-layout #main #mainPanel {
+  margin-left: 0px;
+}
 #main.core-selected #mainPanel {
   margin-left: 0px;
 }

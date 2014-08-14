@@ -39,7 +39,7 @@
           title="Add New Group"
           role="button"
         ></paper-fab>
-        <div layout vertical center>
+        <div layout vertical center id="cards">
           <group-card-titlebar> </group-card-titlebar>
           <sopro-card>
           <h2>A Card Title</h2>
@@ -70,8 +70,12 @@
       }
     });
 
-    document.addEventListener('group-card-create', function () {
+    document.addEventListener('group-card-create', function (event) {
       console.log("core-scaffold heard event group-card-create from some other element");
+      console.log(event);
+      var newCard = document.createElement("sopro-card");
+      newCard.title = event.detail.title;
+      document.getElementById('cards').appendChild(newCard);
     });
   </script>
 </html>
