@@ -4,7 +4,7 @@
 <link rel="import"
   href="../../bower_components/core-icon-button/core-icon-button.html">
 <link rel="import"
-  href="../../bower_components/paper-input/paper-input.html">
+  href="./titlebar-input.html">
 
 
 <!-- 
@@ -20,6 +20,7 @@ and http://www.polymer-project.org/docs/polymer/polymer.html
 
 <polymer-element 
 name="group-card-titlebar" 
+attributes="editing title"
 >
   <!-- 
   Declare a <template><div#ShadowDomDivs></div></template> tree
@@ -34,23 +35,42 @@ name="group-card-titlebar"
         width: 600px; 
         margin: auto;
       }
-      @media screen and (max-width < 600px){
+      @media screen and (max-width: 600px){
         :host{
           display: block;
           position: relative;
           width: 100%;
         }
       }
+      #titleContainer{
+        background-color: #FFFFFF;
+        margin: 8px;
+        min-height: 42px; /* Otherwise the core-icon-button pushes the height down */
+      }
+      #titleInput{
+        margin-left: 8px;
+      }
 
       /* Style a child element declared in the template */
       #wikiTitle{text-align: center}
     </style>
 
-    <div layout horizontal>
-    <paper-input block flex label="Type a name for a New Group..." id="titleInput">
-      {{title}}
-      <core-icon-button icon="save" on-click="{{fireCreate}}"></core-icon-button>
-    </paper-input>
+    <div id = "titleContainer" layout horizontal>
+      <titlebar-input 
+      id="titleInput"
+      block flex
+      label="Type a name for a New Group..."
+      value="{{title}}"
+      tabindex="1"
+      > </titlebar-input>
+      <core-icon-button 
+        id="titleButton"
+        icon="save" 
+        on-click="{{fireCreate}}"
+        hidden?="{{!editing && !title}}"
+        tabindex="2"
+      ></core-icon-button>
+    </div>
 
   </template>
 
@@ -64,6 +84,7 @@ name="group-card-titlebar"
     Polymer('group-card-titlebar', {
       publish: { // If you want to expose properties as tag attributes
         title: null,
+        editing: false,
       },
       attached: function(){
         var that = this;
@@ -75,9 +96,25 @@ name="group-card-titlebar"
             that.fireCreate();
           };
         });
+        this.$.titleButton.addEventListener('keydown', function(e){
+          if(that.title === null || that.title === ""){
+            return;
+          };
+          if(e.which === 13 || e.which === 32){
+            that.fireCreate();
+          };
+        });
+        this.$.titleInput.addEventListener('focus', function(e){
+          that.editing = true;
+        });
+        this.$.titleInput.addEventListener('blur', function(e){
+          that.editing = false;
+        });
       },
       fireCreate: function(){
         this.fire('group-card-create', {title: this.title});
+        this.title = "";
+        this.editing = false;
       },
     });
   </script>

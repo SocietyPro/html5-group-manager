@@ -12,6 +12,7 @@
     <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
     <link rel="import" href="bower_components/core-menu/core-menu.html">
     <link rel="import" href="bower_components/core-item/core-item.html">
+    <link rel="import" href="bower_components/paper-fab/paper-fab.html" >
     <link rel="import" href="sopro_components/sopro-card/sopro-card.html">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
@@ -32,9 +33,14 @@
           <core-icon-button id="listButton" icon="view-stream"></core-icon-button>
           <core-icon-button id="gridButton" icon="view-quilt"></core-icon-button>
         </div>
+        <paper-fab 
+          id="addGroupCardButton" 
+          icon="add"
+          title="Add New Group"
+          role="button"
+        ></paper-fab>
         <div layout vertical center>
-          <group-card-titlebar>
-          </group-card-titlebar>
+          <group-card-titlebar> </group-card-titlebar>
           <sopro-card>
           <h2>A Card Title</h2>
           Some card stuff...
@@ -46,7 +52,24 @@
   <script>
     document.addEventListener('polymer-ready', function () {
       document.getElementById('groupScaffold').closeDrawer();
+
+      // Set up fab to fire group-card-create event when clicked:
+      var fab = document.getElementById('addGroupCardButton');
+      fab.onclick = function(){
+        console.log('Clicked');
+        /*
+        console.log(this);
+        console.log(fab);
+        */
+        var fireEvent = 
+          new CustomEvent('group-card-create', {
+            bubbles: true,
+            detail:{ "title": "" } 
+          });
+        this.dispatchEvent(fireEvent);
+      }
     });
+
     document.addEventListener('group-card-create', function () {
       console.log("core-scaffold heard event group-card-create from some other element");
     });

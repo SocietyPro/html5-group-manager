@@ -1,3 +1,6 @@
+body{
+  font-family: "RobotoDraft"
+}
 #titleText {
   float: left;
   vertical-align: middle;
@@ -9,4 +12,22 @@
 
 .mainTitle {
   width: 100%;
+}
+
+#addGroupCardButton {
+  transition: top ease-in-out 0.3s;
+}
+#addGroupCardButton{
+  display: block;
+  position: absolute;
+  right: 8px;
+  top: 72px;
+  z-index: 5;
+  margin-top: -64px;
+}
+@media screen and (max-width: 776px){
+  /* Reposition FAB when screen shrinks enough that it interferes with titlebar */
+  #addGroupCardButton{
+    top: 100%;
+  }
 }

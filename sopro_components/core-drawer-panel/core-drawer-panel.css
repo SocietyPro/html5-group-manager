@@ -154,3 +154,6 @@ polyfill-next-selector { content: ':host .narrow-layout > #main > [main]'; }
 #main.core-selected #mainPanel {
   margin-left: 0px;
 }
+#mainPanel {
+  background-color: #CCCCCC;
+}
