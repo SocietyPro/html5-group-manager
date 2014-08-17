@@ -128,9 +128,14 @@
   right: 8px;
   bottom: -1px;
 }
+/* This was used to line up the underline with the save icon to the right of the
+ * input, because the save icon already had a margin.
+ * Now that the icon may be hidden with the input focused (if it's unsaveable,
+ * i.e. empty) we no longer want the highlight to be flush with the right edge.
 #underlineHighlight.focused  {
   margin-right: -8px;
 }
+*/
 
 :host([multiline]) #underlineContainer {
   bottom: auto;

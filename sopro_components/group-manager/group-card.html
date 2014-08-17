@@ -1,13 +1,11 @@
-<!-- Make sure platform.js and polymer.html are loaded before creating custom
-elements. You can load them from a parent file. -->
-
-<link rel="import" 
-  href="bower_components/polymer/polymer.html">
-
-<!-- Import any child components you need -->
-
 <link rel="import"
-  href="bower_components/core-icons/core-icons.html">
+  href="../../bower_components/core-icons/core-icons.html">
+<link rel="import"
+  href="../../bower_components/paper-shadow/paper-shadow.html">
+<link rel="import"
+  href="../sopro-icon-button/sopro-icon-button.html">
+<link rel="import"
+  href="../sopro-card/sopro-card.html">
 
 
 <!-- 
@@ -22,36 +20,92 @@ and http://www.polymer-project.org/docs/polymer/polymer.html
 -->
 
 <polymer-element 
-name="wiki-index" 
-attributes="appTitle rootId"
+name="group-card" 
+attributes="title editing z"
+extends="sopro-card"
 >
   <!-- 
   Declare a <template><div#ShadowDomDivs></div></template> tree
   You can use {{dataBinding}} syntax in attributes and text nodes, maybe elsewhere?
   -->
-  <template>
+  <template >
+    <shadow></shadow>
     <style>
-      /* Style this element itself to fill its position: relative container: */
-      :host{
+      /* Hide editor elements without .editing 
+      #card titlebar-input, #card sopro-icon-button{
+        display: none;
+      }
+      #card.editing h2{
+        display: none;
+      }
+      #card.editing titlebar-input, #card.editing sopro-icon-button{
         display: block;
-        position: relative;
-        height: 100%;
-        width: 100%;
+      }
+      */
+      :host {
+      }
+      :host[editing="true"] {
       }
 
-      /* Style a child element declared in the template */
-      #wikiTitle{text-align: center}
+      :host h2{
+        display: block;
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 41px;
+      }
+      :host[editing="true"] h2{
+        display: none;
+      }
+
+      :host titlebar-input{
+        display: none;
+      }
+      :host[editing="true"] titlebar-input{
+        font-size: 1.2rem;
+        display: block;
+      }
+
+      #card{
+        padding: 20px;
+      }
+
     </style>
-
-    <div id="wikiTitle" flex>
-      <span>{{appTitle}}</span>
+    <div id="tabCatcher1" tabindex="0"></div>
+    <div 
+    on-click="{{onCardClicked}}"
+    on-focus="{{onFocuses}}"
+    on-blur="{{onBlurs}}"
+    id="card" 
+    layout vertical
+    tabindex="0"
+    >
+      <div layout horizontal>
+        <h2 flex>{{title}}</h2>
+        <titlebar-input 
+        flex 
+        id="cardTitle"
+        inputValue="{{title}}"
+        on-focus="{{onFocuses}}"
+        on-blur="{{onBlurs}}"
+        tabindex="-1"
+        ></titlebar-input>
+        <sopro-icon-button 
+        id="saveCard"
+        icon="save" 
+        self-center
+        hidden?="{{editing==='false'}}"
+        on-focus="{{onFocuses}}"
+        on-blur="{{onBlurs}}"
+        on-click="{{stopEditing}}"
+        tabindex="0"
+        ></sopro-icon-button>
+      </div>
+      <div flex>
+        <content></content>
+      </div>
     </div>
-
-    <!-- 
-    As long as you imported them with <link rel="import" href=""> you can use tags
-    defined by other components:
-    -->
-    <wiki-page pageid="{{rootId}}"> </wiki-page>
+    <div id="tabCatcher2" tabindex="0"></div>
+    <paper-shadow z="{{z}}" animated="true"></paper-shadow>
   </template>
 
   <!-- 
@@ -61,13 +115,112 @@ attributes="appTitle rootId"
   http://www.polymer-project.org/docs/polymer/polymer.html
   -->
   <script>
-    Polymer('wiki-index', {
+    Polymer('group-card', {
       publish: { // If you want to expose properties as tag attributes
-        appTitle: 'Society Pro Wiki',
-        rootId: 'root',
+        title: '',
+        editing: {value: "false", reflect: true},
+        z: {value: "0", reflect: true},
       },
-      addPage: function(){
-        // A custom function that you can call as <child-tag on-click="{{addPage}}">
+      groupMembers: [],
+      onCardClicked: function(e){
+        console.log('onCardClicked');
+        try{
+          var aId = document.activeElement.id;
+        } catch (e){
+          var aId = null;
+        };
+        console.log(aId);
+        /* Pressing enter on children elements should not click the card. */
+        if(e.explicitOriginalTarget.id == "saveCard"
+        || aId == "input"
+        || aId == "cardTitle"){
+          return;
+        } else {
+          this.startEditing();
+        };
+      },
+      onBlurs: function(e){
+
+        //console.log(e);
+        //this.stopEditing();
+        this.z = "0";
+        this.$.tabCatcher1.setAttribute("tabindex", "0");
+        this.$.tabCatcher2.setAttribute("tabindex", "0");
+      },
+      onFocuses: function(e){
+        //console.log('onFocuses');
+        this.$.tabCatcher1.setAttribute("tabindex", "-1");
+        this.$.tabCatcher2.setAttribute("tabindex", "-1");
+        if(this.editing == "true"){
+          this.z = "2";
+        } else {
+          this.z = "1";
+        };
+      },
+      onCardFocused: function(e){
+        console.log('onCardFocused');
+        this.$.tabCatcher1.setAttribute("tabindex", "-1");
+        this.$.tabCatcher2.setAttribute("tabindex", "-1");
+        this.z = "1";
+      },
+      startEditing: function(){
+        console.log('startEditing');
+        this.editing = "true";
+        this.z = "2";
+        this.$.cardTitle.focus();
+        this.$.tabCatcher1.setAttribute("tabindex", "-1");
+        this.$.tabCatcher2.setAttribute("tabindex", "-1");
+      },
+      stopEditing: function(){
+        console.log('stopEditing');
+        this.editing = "false";
+        this.z = "1";
+        this.$.card.focus();
+      },
+      attached: function(){
+        /* Send click if you hit enter or space while the card is focused: */
+        var that = this;
+        // Check for enter and use Capture.
+        // This makes keypress events on #card
+        this.addEventListener('keypress', function(e){
+          try{
+            var aId = document.activeElement.id;
+            }catch(e){
+            var aId = "";
+          };
+          if(e.which === 13 || e.which === 32){
+            // If Enter within cardTitle input: 
+            if(aId === 'cardTitle' || aId === 'input' || aId === 'saveCard' ){
+              that.stopEditing();
+              return;
+            };
+            // If Enter on card itself 
+            //console.log('Clicking card');
+            //that.$.card.click();
+            that.startEditing();
+          };
+          if(e.which === 27){
+            console.log('ESC');
+            that.stopEditing();
+          };
+        }, true);
+        // Check for enter and use Bubble.
+        // This hears child keypress events on #cardTitle
+        this.addEventListener('keypress', function(e){
+          if(e.which === 27){
+            console.log('ESC');
+            that.stopEditing();
+          };
+        }, false);
+
+        // If tab catchers ever get focus, set focus to card (which will disable
+        // the tab catchers with tabindex='-1'
+        this.$.tabCatcher1.addEventListener('focus',function(){
+          that.$.card.focus();
+        })
+        this.$.tabCatcher2.addEventListener('focus',function(){
+          that.$.card.focus();
+        })
       },
     });
   </script>

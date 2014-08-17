@@ -4,6 +4,23 @@ body{
 sopro-card{
   margin-bottom: 8px;
 }
+core-icon-button:focus{
+  background-color: rgba(0,0,0,0.26);
+}
+core-icon-button:focus{
+  background-color: rgba(0,0,0,0.54);
+}
+#cards{
+  box-model: border-box;
+  padding: 8px;
+}
+group-card{
+  margin-bottom: 8px;
+}
+paper-fab:focus .paper-shadow {
+  color: green;
+  background-color: inherit;
+}
 #titleText {
   float: left;
   vertical-align: middle;

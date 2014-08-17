@@ -2,7 +2,7 @@
 <link rel="import"
   href="../../bower_components/core-icons/core-icons.html">
 <link rel="import"
-  href="../../bower_components/core-icon-button/core-icon-button.html">
+  href="../sopro-icon-button/sopro-icon-button.html">
 <link rel="import"
   href="./titlebar-input.html">
 
@@ -20,7 +20,7 @@ and http://www.polymer-project.org/docs/polymer/polymer.html
 
 <polymer-element 
 name="group-card-titlebar" 
-attributes="editing title"
+attributes="title editing"
 >
   <!-- 
   Declare a <template><div#ShadowDomDivs></div></template> tree
@@ -34,6 +34,8 @@ attributes="editing title"
         position: relative;
         width: 600px; 
         margin: auto;
+        box-sizing: border-box;
+        padding: 8px;
       }
       @media screen and (max-width: 600px){
         :host{
@@ -42,36 +44,40 @@ attributes="editing title"
           width: 100%;
         }
       }
+      #shadowContainer{
+      }
       #titleContainer{
+        box-sizing: border-box;
+        position: relative;
         background-color: #FFFFFF;
-        margin: 8px;
-        min-height: 42px; /* Otherwise the core-icon-button pushes the height down */
+        min-height: 42px; /* Otherwise the sopro-icon-button pushes the height down */
       }
       #titleInput{
-        margin-left: 8px;
+        padding-left: 8px;
       }
 
-      /* Style a child element declared in the template */
-      #wikiTitle{text-align: center}
     </style>
 
     <div id = "titleContainer" layout horizontal>
+      <paper-shadow id="titleShadow" z="{{z}}" animated="true"></paper-shadow>
       <titlebar-input 
       id="titleInput"
       block flex
       label="Type a name for a New Group..."
       value="{{title}}"
-      tabindex="1"
-      > </titlebar-input>
-      <core-icon-button 
+      on-input="{{titleInputChanged}}"
+      tabindex="-1"
+      >
+      </titlebar-input>
+      <sopro-icon-button 
         id="titleButton"
         icon="arrow-forward" 
         on-click="{{fireCreate}}"
-        hidden?="{{!editing && !title}}"
-        tabindex="2"
-      ></core-icon-button>
+        hidden?="{{!editing || !title}}"
+        tabindex="{{(editing && title) ? 0 : -1}}"
+        style="{{!title ? 'color: red' : '' }}"
+      ></sopro-icon-button>
     </div>
-
   </template>
 
   <!-- 
@@ -83,38 +89,48 @@ attributes="editing title"
   <script>
     Polymer('group-card-titlebar', {
       publish: { // If you want to expose properties as tag attributes
-        title: null,
+        title: {value:null, reflect:true},
         editing: false,
+        z: {value:"0", reflect:true},
+      },
+      titleInputChanged: function(e){
+        this.title = e.originalTarget.value;
+        console.log(e);
       },
       attached: function(){
         var that = this;
-        this.$.titleInput.addEventListener('keydown', function(e){
+        this.$.titleInput.addEventListener('keypress', function(e){
           if(that.title === null || that.title === ""){
             return;
           };
-          if(e.which === 13){
+          if(e.which === 13){ // Enter
             that.fireCreate();
           };
-        });
-        this.$.titleButton.addEventListener('keydown', function(e){
-          if(that.title === null || that.title === ""){
-            return;
-          };
-          if(e.which === 13 || e.which === 32){
-            that.fireCreate();
+          if(e.which === 27){ // ESC
+            that.stopEditing();
           };
         });
         this.$.titleInput.addEventListener('focus', function(e){
           that.editing = true;
+          that.z = 1;
         });
         this.$.titleInput.addEventListener('blur', function(e){
-          that.editing = false;
+          if(that.title === null || that.title === ""){
+            that.editing = false;
+            that.z = 0;
+          }
         });
       },
+      domReady: function(){
+        var titleShadow = this.$.titleShadow;
+        titleShadow.target = this.$.titleContainer;
+      },
       fireCreate: function(){
+        this.$.titleInput.blur();
         this.fire('group-card-create', {title: this.title});
         this.title = "";
         this.editing = false;
+        this.z = 0;
       },
     });
   </script>

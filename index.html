@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" tabindex="-1">
   <head>  
     <script src="bower_components/platform/platform.js"></script>
     <script src="js/angular.js" type="text/javascript"></script>
     <script src="js/angular-route.js" type="text/javascript"></script>
     <script src="js/app.js" type="text/javascript"></script>
     
+    <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/font-roboto/roboto.html">
     <link rel="import" href="sopro_components/core-scaffold/core-scaffold.html">
     <link rel="import" href="sopro_components/group-manager/group-card-titlebar.html">
@@ -13,10 +14,13 @@
     <link rel="import" href="bower_components/core-menu/core-menu.html">
     <link rel="import" href="bower_components/core-item/core-item.html">
     <link rel="import" href="bower_components/paper-fab/paper-fab.html" >
-    <link rel="import" href="sopro_components/sopro-card/sopro-card.html">
+    <link rel="import" href="sopro_components/group-manager/group-card.html">
+    <link rel="import" href="sopro_components/sopro-icon-button/sopro-icon-button.html">
+    <!-- 
+    -->
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
-  <body unresolved ng-controller="appCtrl">
+  <body unresolved ng-controller="appCtrl" tabindex="-1">
     <div id="applicationContainer">
       <core-scaffold id="groupScaffold" narrow="true">
         <core-header-panel navigation flex mode="seamed">
@@ -30,22 +34,27 @@
             SocietyPro Groups and Governance
         </div>
         <div id="listMorphButtons" tool horizontal layout>
-          <core-icon-button id="listButton" icon="view-stream"></core-icon-button>
-          <core-icon-button id="gridButton" icon="view-quilt"></core-icon-button>
+          <sopro-icon-button 
+          id="listButton" 
+          tabindex="0"
+          icon="view-stream"></sopro-icon-button>
+          <sopro-icon-button 
+          id="gridButton" 
+          tabindex="0"
+          icon="view-quilt"></sopro-icon-button>
+        </div>
+        <div layout vertical center id="cards" tabindex="-1">
+          <group-card-titlebar> </group-card-titlebar>
+          <group-card title="Foobar">
+          </group-card>
         </div>
         <paper-fab 
           id="addGroupCardButton" 
           icon="add"
           title="Add New Group"
           role="button"
+          tabindex="0"
         ></paper-fab>
-        <div layout vertical center id="cards">
-          <group-card-titlebar> </group-card-titlebar>
-          <sopro-card>
-          <h2>A Card Title</h2>
-          Some card stuff...
-          </sopro-card>
-        </div>
       </core-scaffold>
     </div>
   </body>
@@ -67,15 +76,29 @@
             detail:{ "title": "" } 
           });
         this.dispatchEvent(fireEvent);
-      }
+      };
+      
+      fab.onkeypress = function(e){
+        if(e.which == 13 || e.which == 32){
+          fab.click();
+        };
+      };
     });
+      
 
     document.addEventListener('group-card-create', function (event) {
       console.log("core-scaffold heard event group-card-create from some other element");
       console.log(event);
-      var newCard = document.createElement("sopro-card");
+      var newCard = document.createElement("group-card");
       newCard.title = event.detail.title;
       document.getElementById('cards').appendChild(newCard);
+      document.getElementById('cards').lastChild.click();
     });
+
+    /*
+    window.setInterval(function(){
+      console.log(document.activeElement);
+    }, 2000);
+    */
   </script>
 </html>
