@@ -154,9 +154,11 @@ extends="sopro-card"
 
         // Bind keys on group card:
         this.addEventListener('keypress', function(e){
+          //console.log(e);
           // Do nothing with keypresses on save button; they have their own handler
-          if( e.explicitOriginalTarget.id 
-          && e.explicitOriginalTarget.id === 'saveCard' ){
+          try{ var eId = e.explicitOriginalTarget.id
+          } catch (e){ var eId = null; };
+          if( eId === 'saveCard' ){
             return;
           };
 
