@@ -94,7 +94,8 @@ attributes="title editing"
         z: {value:"0", reflect:true},
       },
       titleInputChanged: function(e){
-        this.title = e.originalTarget.value;
+        var t = e.srcElement || e.originalTarget;
+        this.title = t.value;
         console.log(e);
       },
       attached: function(){
