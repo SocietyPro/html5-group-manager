@@ -94,14 +94,13 @@ extends="sopro-card"
         //console.log(e);
 
         // Get the currently focused element
-        try{
-          var aId = document.activeElement.id;
-        } catch (e){
-          var aId = null;
-        };
-        console.log(aId, e.explicitOriginalTarget.id);
+        try{ var aId = document.activeElement.id;
+        } catch (e){ var aId = null; };
+        try{ var eId = e.explicitOriginalTarget.id
+        } catch (e){ var eId = null; };
+        console.log(aId, eId);
         /* Pressing enter on children elements should not click the card. */
-        if(e.explicitOriginalTarget.id == "saveCard"
+        if(eId == "saveCard"
         || aId == "saveCard"
         || aId == "input"
         || aId == "cardTitle"){
@@ -156,7 +155,8 @@ extends="sopro-card"
         // Bind keys on group card:
         this.addEventListener('keypress', function(e){
           // Do nothing with keypresses on save button; they have their own handler
-          if( e.explicitOriginalTarget.id === 'saveCard' ){
+          if( e.explicitOriginalTarget.id 
+          && e.explicitOriginalTarget.id === 'saveCard' ){
             return;
           };
 
