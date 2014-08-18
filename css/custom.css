@@ -42,14 +42,14 @@ group-card{
   background-color: rgba(210, 63, 49, 0.8);
 }
 /* Fade in when you focus: */
-#addGroupCardButton:focus{
+#addGroupCardButton:focus, #addGroupCardButton:hover{
   background-color: rgba(210, 63, 49, 1);
 }
 /* Spin the cross button when you focus: */
 #addGroupCardButton core-icon{
   transition: transform ease-in-out 0.6s;
 }
-#addGroupCardButton:focus core-icon{
+#addGroupCardButton:focus core-icon, #addGroupCardButton:hover core-icon{
   transform: rotate(360deg);
 }
 
