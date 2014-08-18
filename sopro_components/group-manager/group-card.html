@@ -64,7 +64,7 @@ extends="sopro-card"
         hidden?="{{editing==='false'}}"
         on-focus="{{onFocuses}}"
         on-blur="{{onBlurs}}"
-        on-click="{{stopEditing}}"
+        <!-- Binding this manually on-click="{{stopEditing}}" -->
         tabindex="0"
         ></sopro-icon-button>
       </div>
@@ -148,6 +148,11 @@ extends="sopro-card"
         // Store a reference to the group-card element for use in callbacks:
         var that = this;
 
+        // Make clicks on the button stop propagating:
+        this.$.saveCard.addEventListener('click', function(e){
+          that.stopEditing();
+          e.stopPropagation();
+        });
         // Pass clicks on the group-card to its click handler:
         this.addEventListener('click', this.onCardClicked, true);
         //this.addEventListener('tap', this.onCardClicked, true);
