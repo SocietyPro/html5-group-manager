@@ -8,8 +8,6 @@ core-icon-button:focus{
   background-color: rgba(0,0,0,0.54);
 }
 #cards{
-  box-model: border-box;
-  padding: 8px;
 }
 group-card{
   margin-bottom: 8px;

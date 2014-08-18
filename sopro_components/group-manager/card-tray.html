@@ -1,0 +1,85 @@
+<polymer-element 
+name="card-tray" 
+attributes="pattern"
+>
+  <template>
+    <style>
+      :host{
+        display: block;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+        font-size: 0em;
+      }
+      :host > *{
+        font-size: 1em;
+      }
+      :host.stream > * { /* any direct child */
+        width: 100%;
+        display: block;
+      }
+      :host.quilt > * { /* any direct child */
+        max-width: 300px;
+        display: inline-block;
+      }
+
+      /* Responsive stuff */
+      @media screen and (min-width: 1100px){
+        /* 1100 px or greater screen - 4x 250px*/
+        :host.quilt{
+          width: 1100px;
+          margin-left: -33px;
+
+        }
+        :host.quilt > * {
+          width: 250px;
+          display: inline-block;
+          margin-left: 33px;
+        }
+
+        :host.quilt > *[editing="true"] {
+          background-color: pink;
+          min-width: 533px;
+          display: inline-block;
+          margin-left: 33px;
+        }
+      }
+    </style>
+    <content></content>
+
+  </template>
+
+  <script>
+    Polymer('card-tray', {
+      publish: { // If you want to expose properties as tag attributes
+        pattern: {value: 'stream', reflect: true}
+      },
+      patternChanged: function(){
+        this.classList.remove('stream');
+        this.classList.remove('quilt');
+        switch(this.pattern){
+          case "stream":
+            this.classList.add('stream'); break;
+          case "quilt":
+            this.classList.add('quilt'); break;
+          default: 
+            this.classList.add('stream'); break;
+        };
+      },
+      attached: function(){
+        var that = this;
+        document.addEventListener('card-tray-pattern-change', function(e){
+          console.log('Heard card-tray-pattern-change');
+          var newPattern = e.detail.pattern;
+          if(!newPattern){
+            console.log('Bad event', e);
+            newPattern = "stream";
+          }
+          that.pattern = newPattern;
+        });
+      },
+    });
+  </script>
+</polymer-element>

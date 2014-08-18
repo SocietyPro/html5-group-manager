@@ -15,6 +15,7 @@
     <link rel="import" href="sopro_components/core-scaffold/core-scaffold.html">
     <link rel="import" href="sopro_components/group-manager/group-card-titlebar.html">
     <link rel="import" href="sopro_components/group-manager/group-card.html">
+    <link rel="import" href="sopro_components/group-manager/card-tray.html">
     <link rel="import" href="sopro_components/sopro-icon-button/sopro-icon-button.html">
 
     <link rel="stylesheet" type="text/css" href="css/custom.css">
@@ -34,18 +35,25 @@
         </div>
         <div id="listMorphButtons" tool horizontal layout>
           <sopro-icon-button 
-          id="listButton" 
+          id="viewStreamButton" 
           tabindex="0"
           icon="view-stream"></sopro-icon-button>
           <sopro-icon-button 
-          id="gridButton" 
+          id="viewQuiltButton" 
           tabindex="0"
           icon="view-quilt"></sopro-icon-button>
         </div>
-        <div layout vertical center id="cards" tabindex="-1">
-          <group-card-titlebar> </group-card-titlebar>
-          <group-card title="Foobar">
-          </group-card>
+        <div layout vertical center relative>
+          <!-- 
+          -->
+          <group-card-titlebar></group-card-titlebar>
+          <card-tray id="cards" pattern="stream" tabindex="-1">
+            <group-card title="Voodoo"></group-card>
+            <group-card title="Hiro"></group-card>
+            <group-card title="Plato"></group-card>
+            <group-card title="Jon"></group-card>
+            <group-card title="Raf"></group-card>
+          </card-tray>
         </div>
         <paper-fab 
           id="addGroupCardButton" 
@@ -59,6 +67,7 @@
   </body>
   <script>
     document.addEventListener('polymer-ready', function () {
+      console.log('polymer-ready');
       document.getElementById('groupScaffold').closeDrawer();
 
       // Set up fab to fire group-card-create event when clicked:
@@ -76,6 +85,30 @@
         if(e.which == 13 || e.which == 32){
           fab.click();
         };
+      };
+
+
+      var stream = document.getElementById('viewStreamButton');
+      stream.onclick = function(){
+        console.log('Firing card-tray-pattern-change');
+        var fireEvent = 
+          new CustomEvent('card-tray-pattern-change', {
+            bubbles: true,
+            detail:{ "pattern": "stream" } 
+          });
+        console.log(fireEvent);
+        document.dispatchEvent(fireEvent);
+      };
+
+      var quilt = document.getElementById('viewQuiltButton');
+      quilt.onclick = function(){
+        console.log('Firing card-tray-pattern-change');
+        var fireEvent = 
+          new CustomEvent('card-tray-pattern-change', {
+            bubbles: true,
+            detail:{ "pattern": "quilt" } 
+          });
+        document.dispatchEvent(fireEvent);
       };
 
     });
