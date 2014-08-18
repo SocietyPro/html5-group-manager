@@ -5,9 +5,6 @@ sopro-card{
   margin-bottom: 8px;
 }
 core-icon-button:focus{
-  background-color: rgba(0,0,0,0.26);
-}
-core-icon-button:focus{
   background-color: rgba(0,0,0,0.54);
 }
 #cards{
@@ -17,10 +14,7 @@ core-icon-button:focus{
 group-card{
   margin-bottom: 8px;
 }
-paper-fab:focus .paper-shadow {
-  color: green;
-  background-color: inherit;
-}
+
 #titleText {
   float: left;
   vertical-align: middle;
@@ -36,6 +30,7 @@ paper-fab:focus .paper-shadow {
 
 #addGroupCardButton {
   transition: top ease-in-out 0.3s;
+  transition: background-color ease-in-out 0.3s;
 }
 #addGroupCardButton{
   display: block;
@@ -44,9 +39,22 @@ paper-fab:focus .paper-shadow {
   top: 72px;
   z-index: 5;
   margin-top: -64px;
+  background-color: rgba(210, 63, 49, 0.8);
 }
+/* Fade in when you focus: */
+#addGroupCardButton:focus{
+  background-color: rgba(210, 63, 49, 1);
+}
+/* Spin the cross button when you focus: */
+#addGroupCardButton core-icon{
+  transition: transform ease-in-out 0.6s;
+}
+#addGroupCardButton:focus core-icon{
+  transform: rotate(360deg);
+}
+
+/* Reposition FAB when screen shrinks enough that it interferes with titlebar */
 @media screen and (max-width: 776px){
-  /* Reposition FAB when screen shrinks enough that it interferes with titlebar */
   #addGroupCardButton{
     top: 100%;
   }

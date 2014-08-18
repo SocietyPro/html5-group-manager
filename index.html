@@ -8,16 +8,15 @@
     
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/font-roboto/roboto.html">
-    <link rel="import" href="sopro_components/core-scaffold/core-scaffold.html">
-    <link rel="import" href="sopro_components/group-manager/group-card-titlebar.html">
     <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
     <link rel="import" href="bower_components/core-menu/core-menu.html">
     <link rel="import" href="bower_components/core-item/core-item.html">
     <link rel="import" href="bower_components/paper-fab/paper-fab.html" >
+    <link rel="import" href="sopro_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="sopro_components/group-manager/group-card-titlebar.html">
     <link rel="import" href="sopro_components/group-manager/group-card.html">
     <link rel="import" href="sopro_components/sopro-icon-button/sopro-icon-button.html">
-    <!-- 
-    -->
+
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
   <body unresolved ng-controller="appCtrl" tabindex="-1">
@@ -65,11 +64,6 @@
       // Set up fab to fire group-card-create event when clicked:
       var fab = document.getElementById('addGroupCardButton');
       fab.onclick = function(){
-        console.log('Clicked');
-        /*
-        console.log(this);
-        console.log(fab);
-        */
         var fireEvent = 
           new CustomEvent('group-card-create', {
             bubbles: true,
@@ -83,22 +77,31 @@
           fab.click();
         };
       };
+
     });
       
-
+    //Actually instantiate a group-card on group-card-create: 
     document.addEventListener('group-card-create', function (event) {
+      var newCardEl;
       console.log("core-scaffold heard event group-card-create from some other element");
-      console.log(event);
+      //console.log(event);
       var newCard = document.createElement("group-card");
       newCard.title = event.detail.title;
-      document.getElementById('cards').appendChild(newCard);
-      document.getElementById('cards').lastChild.click();
+      newCardEl = document.getElementById('cards').appendChild(newCard);
+
+      // Clicking the element immediately seems to fail in firefox, this delay
+      // helps?
+      window.setTimeout(function(){
+        newCardEl.click();
+      }, 200)
     });
 
     /*
+    Useful to see what is going on while debugging changing focus with the tab
+    key:
     window.setInterval(function(){
       console.log(document.activeElement);
-    }, 2000);
+    }, 5000);
     */
   </script>
 </html>
