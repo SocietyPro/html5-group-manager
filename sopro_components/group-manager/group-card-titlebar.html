@@ -1,4 +1,3 @@
-<!-- Import any child components you need -->
 <link rel="import"
   href="../../bower_components/core-icons/core-icons.html">
 <link rel="import"
@@ -6,29 +5,12 @@
 <link rel="import"
   href="./titlebar-input.html">
 
-
-<!-- 
-Declare a <polymer-element name="tag-name" attributes="space separated attributes">
-tag-name MUST have at least one dash.
-attributes data bind the HTML tag attributes to the DOM properties of the element.
-
-If you two way data binding, (where changing the property also changes the attribute), 
-use 'reflect'.
-See http://www.polymer-project.org/docs/start/creatingelements.html
-and http://www.polymer-project.org/docs/polymer/polymer.html
--->
-
 <polymer-element 
 name="group-card-titlebar" 
 attributes="title editing"
 >
-  <!-- 
-  Declare a <template><div#ShadowDomDivs></div></template> tree
-  You can use {{dataBinding}} syntax in attributes and text nodes, maybe elsewhere?
-  -->
   <template>
     <style>
-      /* Style this element itself to fill its position: relative container: */
       :host{
         display: block;
         position: relative;
@@ -80,12 +62,6 @@ attributes="title editing"
     </div>
   </template>
 
-  <!-- 
-  Call Polymer(tagName, options) to register this element and set up the
-  functionality you define with data binding and functions.
-  See here for reference:
-  http://www.polymer-project.org/docs/polymer/polymer.html
-  -->
   <script>
     Polymer('group-card-titlebar', {
       publish: { // If you want to expose properties as tag attributes
@@ -94,27 +70,38 @@ attributes="title editing"
         z: {value:"0", reflect:true},
       },
       titleInputChanged: function(e){
+        // The stock on-change only triggers when you commit the input with
+        // enter or a blur. We want to update the title attribute every time the
+        // input value changes:
         var t = e.srcElement || e.originalTarget;
         this.title = t.value;
-        console.log(e);
+        //console.log(e);
       },
       attached: function(){
+        // Save a reference to the group-card-titlebar for use in callbacks:
         var that = this;
+
+        // Handle various keypresses that occur while the group-card-titlebar is focused:
         this.$.titleInput.addEventListener('keypress', function(e){
           if(that.title === null || that.title === ""){
             return;
           };
           if(e.which === 13){ // Enter
-            that.fireCreate();
+            that.fireCreate(); // Call the function that sends a 'create card' event
           };
           if(e.which === 27){ // ESC
-            that.stopEditing();
+            that.stopEditing(); 
           };
+          // Any other keys, do nothing (they will probably go to the input)
         });
+
+        // Start editing on focus
         this.$.titleInput.addEventListener('focus', function(e){
           that.editing = true;
           that.z = 1;
         });
+
+        // Stop editing on blur, but only if the input is blank.
         this.$.titleInput.addEventListener('blur', function(e){
           if(that.title === null || that.title === ""){
             that.editing = false;
@@ -122,11 +109,9 @@ attributes="title editing"
           }
         });
       },
-      domReady: function(){
-        var titleShadow = this.$.titleShadow;
-        titleShadow.target = this.$.titleContainer;
-      },
       fireCreate: function(){
+        // Fire an event that tells the group-card index.html to instantiate a
+        // new group-card element. Pass it the title.
         this.$.titleInput.blur();
         this.fire('group-card-create', {title: this.title});
         this.title = "";
