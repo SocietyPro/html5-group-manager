@@ -157,7 +157,7 @@ extends="sopro-card"
         //this.addEventListener('tap', this.onCardClicked, true);
 
         // Bind keys on group card:
-        this.addEventListener('keypress', function(e){
+        this.addEventListener('keydown', function(e){
           //console.log(e);
           // Do nothing with keypresses on save button; they have their own handler
           try{ var eId = e.explicitOriginalTarget.id
