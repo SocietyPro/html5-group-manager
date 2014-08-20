@@ -2,9 +2,14 @@
 <html ng-app="app" tabindex="-1">
   <head>  
     <script src="bower_components/platform/platform.js"></script>
+    <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
+    <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+
+    <!--
     <script src="js/angular.js" type="text/javascript"></script>
     <script src="js/angular-route.js" type="text/javascript"></script>
     <script src="js/app.js" type="text/javascript"></script>
+    -->
     
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/font-roboto/roboto.html">
@@ -44,17 +49,18 @@
           icon="view-quilt"></sopro-icon-button>
         </div>
         <div layout vertical center relative>
-          <!-- 
-          -->
           <group-card-titlebar></group-card-titlebar>
           <card-tray id="cards" pattern="stream" tabindex="-1">
-            <group-card title="Voodoo"></group-card>
-            <group-card title="Hiro"></group-card>
-            <group-card title="Plato"></group-card>
-            <group-card title="Jon"></group-card>
-            <group-card title="Raf"></group-card>
+            <template id="cardsTemplate" is="auto-binding" repeat="{{groups}}">
+              <group-card cardtitle="{{name}}"></group-card>
+            </template>
           </card-tray>
         </div>
+        <!--
+        <template id="inputsTemplate" is="auto-binding" repeat="{{groups}}">
+          <input value="{{name}}"></input>
+        </template>
+        -->
         <paper-fab 
           id="addGroupCardButton" 
           icon="add"
@@ -66,8 +72,27 @@
     </div>
   </body>
   <script>
+    var Cambrian = Cambrian || {};
+    var japi;
+    if(Cambrian.JAPI !== undefined && !Cambrian.isMockCambrian){
+      console.log('Instantiating japi');
+      japi = Cambrian.JAPI();
+    } else {
+      // use mocks
+      console.log('Instantiating mock japi');
+      japi = Cambrian.mockJAPI();
+    }
+
     document.addEventListener('polymer-ready', function () {
       console.log('polymer-ready');
+
+      // Bind data to templates:
+      var t1 = document.getElementById('cardsTemplate');
+      t1.groups = japi.me.groups;
+      //var t2 = document.getElementById('inputsTemplate');
+      //t2.groups = japi.me.groups;
+
+      // Close the drawer that's open by default:
       document.getElementById('groupScaffold').closeDrawer();
 
       // Set up fab to fire group-card-create event when clicked:
@@ -76,7 +101,7 @@
         var fireEvent = 
           new CustomEvent('group-card-create', {
             bubbles: true,
-            detail:{ "title": "" } 
+            detail:{ "cardtitle": "" } 
           });
         this.dispatchEvent(fireEvent);
       };
@@ -119,7 +144,7 @@
       console.log("core-scaffold heard event group-card-create from some other element");
       //console.log(event);
       var newCard = document.createElement("group-card");
-      newCard.title = event.detail.title;
+      newCard.cardtitle = event.detail.cardtitle;
       newCardEl = document.getElementById('cards').appendChild(newCard);
 
       // Clicking the element immediately seems to fail in firefox, this delay

@@ -5,7 +5,7 @@
 
 <polymer-element 
 name="group-card" 
-attributes="title editing z"
+attributes="cardtitle editing z"
 extends="sopro-card"
 >
   <template >
@@ -48,11 +48,11 @@ extends="sopro-card"
     tabindex="0"
     >
       <div layout horizontal>
-        <h2 flex>{{title}}</h2>
+        <h2 flex>{{cardtitle}}</h2>
         <titlebar-input 
         flex 
         id="cardTitle"
-        inputValue="{{title}}"
+        inputValue="{{cardtitle}}"
         on-focus="{{onFocuses}}"
         on-blur="{{onBlurs}}"
         tabindex="-1"
@@ -78,7 +78,7 @@ extends="sopro-card"
   <script>
     Polymer('group-card', {
       publish: { // If you want to expose properties as tag attributes
-        title: '',
+        cardtitle: {value: '', reflect: true},
         editing: {value: "false", reflect: true},
         z: {value: "0", reflect: true},
         groupMembers: [],
