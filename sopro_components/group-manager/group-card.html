@@ -5,7 +5,7 @@
 
 <polymer-element 
 name="group-card" 
-attributes="cardtitle editing z"
+attributes="cardtitle type number editing z"
 extends="sopro-card"
 >
   <template >
@@ -22,9 +22,12 @@ extends="sopro-card"
         font-size: 1.2rem;
         line-height: 41px;
       }
+
       :host[editing="true"] h2{
         display: none;
       }
+
+
 
       :host titlebar-input{
         display: none;
@@ -34,8 +37,13 @@ extends="sopro-card"
         display: block;
       }
 
+      :host .groupDetails {
+        display: inline !important;
+      }
+
       #card{
-        padding: 20px;
+        padding: 0 24px;
+        min-height: 64px;
       }
 
     </style>
@@ -67,8 +75,12 @@ extends="sopro-card"
         tabindex="0"
         ></sopro-icon-button>
       </div>
-      <div flex>
-        <content></content>
+      <div class="groupDetails" layout horizontal>
+        <span>{{type}}</span>
+        <span>
+          <i class="fa fa-users"></i>
+          {{number}}
+        </span>
       </div>
     </div>
     <div id="tabCatcher2" tabindex="0"></div>
@@ -79,6 +91,8 @@ extends="sopro-card"
     Polymer('group-card', {
       publish: { // If you want to expose properties as tag attributes
         cardtitle: {value: '', reflect: true},
+        type: '',
+        number: '',
         editing: {value: "false", reflect: true},
         z: {value: "0", reflect: true},
         groupMembers: [],
@@ -157,7 +171,7 @@ extends="sopro-card"
         //this.addEventListener('tap', this.onCardClicked, true);
 
         // Bind keys on group card:
-        this.addEventListener('keypress', function(e){
+        this.addEventListener('keydown', function(e){
           //console.log(e);
           // Do nothing with keypresses on save button; they have their own handler
           try{ var eId = e.explicitOriginalTarget.id

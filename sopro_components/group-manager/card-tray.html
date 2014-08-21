@@ -10,7 +10,6 @@ attributes="pattern"
         height: 100%;
         width: 100%;
         box-sizing: border-box;
-        padding: 8px;
         font-size: 0em;
       }
       :host > *{
@@ -19,10 +18,18 @@ attributes="pattern"
       :host.stream > * { /* any direct child */
         width: 100%;
         display: block;
+        border-bottom: 1px solid lightgrey;
       }
+
+      :host.stream > *[editing="true"] {
+        margin: 10px 0;
+        background-color: pink;
+      }
+
       :host.quilt > * { /* any direct child */
         max-width: 300px;
         display: inline-block;
+        margin-bottom: 8px;
       }
 
       /* Responsive stuff */
@@ -69,6 +76,7 @@ attributes="pattern"
         };
       },
       attached: function(){
+        this.classList.add('stream');
         var that = this;
         document.addEventListener('card-tray-pattern-change', function(e){
           console.log('Heard card-tray-pattern-change');

@@ -9,9 +9,6 @@ core-icon-button:focus{
 }
 #cards{
 }
-group-card{
-  margin-bottom: 8px;
-}
 
 #titleText {
   float: left;
@@ -33,15 +30,14 @@ group-card{
 #addGroupCardButton{
   display: block;
   position: absolute;
-  right: 8px;
-  top: 72px;
+  right: 24px;
+  bottom: 24px;
   z-index: 5;
-  margin-top: -64px;
-  background-color: rgba(210, 63, 49, 0.8);
+  background-color: rgba(82, 110, 156, 0.8);
 }
 /* Fade in when you focus: */
 #addGroupCardButton:focus, #addGroupCardButton:hover{
-  background-color: rgba(210, 63, 49, 1);
+  background-color: rgba(82, 110, 156, 1);
 }
 /* Spin the cross button when you focus: */
 #addGroupCardButton core-icon{
