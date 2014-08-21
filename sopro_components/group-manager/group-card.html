@@ -94,8 +94,44 @@ extends="sopro-card"
         type: '',
         number: '',
         editing: {value: "false", reflect: true},
-        z: {value: "0", reflect: true},
+        z: {value: "1", reflect: true},
         groupMembers: [],
+      },
+      setZ: function(){
+        /* Cases:
+        unfocused, not editing: 1
+        unfocused, editing: 2
+        focused, not editing: 2
+        card focused, editing: 2
+        input focused, editing: 3
+        */
+
+        //console.log(document.activeElement); //console.log(this.$.card);
+
+        var z = 1;
+        if(
+           (this.impl        === document.activeElement)
+        || (this.$.card.impl === document.activeElement)
+        ) { // Card itself focused
+          if(this.editing == "false"){
+            z += 1; // Bump a focused but not-edited card up
+          } else {
+            // Don't bump a focused and edited card here. we add 1 for editing below
+          }
+        } else if(
+           (this.$.cardTitle.impl === document.activeElement)
+        || (this.$.cardTitle.impl.querySelector('#input')  === document.activeElement)
+        || (this.$.saveCard.impl  === document.activeElement)
+        ) { 
+          // Input or button inside card have focus
+          z += 1;
+        };
+
+        if(this.editing === "true"){ // The card is opened for editing
+          z += 1;
+        };
+
+        this.z = z;
       },
       onCardClicked: function(e){
         // The default action of clicking the card is to start editing it. 
@@ -125,11 +161,14 @@ extends="sopro-card"
       },
       onBlurs: function(e){
         //this.stopEditing();
+        /*
         if(this.editing == "true"){
           this.z = "1";
         } else {
           this.z = "0";
         };
+        */
+        this.setZ();
         this.$.tabCatcher1.setAttribute("tabindex", "0");
         this.$.tabCatcher2.setAttribute("tabindex", "0");
       },
@@ -137,16 +176,20 @@ extends="sopro-card"
         //console.log('onFocuses');
         this.$.tabCatcher1.setAttribute("tabindex", "-1");
         this.$.tabCatcher2.setAttribute("tabindex", "-1");
+        this.setZ();
+        /*
         if(this.editing == "true"){
           this.z = "2";
         } else {
           this.z = "1";
         };
+        */
       },
       startEditing: function(){
         console.log('startEditing');
         this.editing = "true";
-        this.z = "2";
+        //this.z = "2";
+        this.setZ();
         this.$.cardTitle.focus();
         this.$.tabCatcher1.setAttribute("tabindex", "-1");
         this.$.tabCatcher2.setAttribute("tabindex", "-1");
@@ -154,7 +197,8 @@ extends="sopro-card"
       stopEditing: function(){
         console.log('stopEditing');
         this.editing = "false";
-        this.z = "1";
+        //this.z = "1";
+        this.setZ();
         this.$.card.focus();
       },
       attached: function(){

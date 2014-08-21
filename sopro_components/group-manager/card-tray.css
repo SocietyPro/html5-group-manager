@@ -1,0 +1,63 @@
+:host{
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 632px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  font-size: 0em; /* fixes inline-block whitespace bug. we must manually reset font-size in children */
+}
+
+/* Tray should not be constrained to 600px if quilt view */
+:host.quilt{
+  width: 100%;
+}
+
+/* Have card tray container in stream fill screen width below 632px */
+@media screen and (max-width: 632px){
+  :host.stream{
+    width: 100%;
+  }
+}
+:host > *{
+  font-size: 1em;
+}
+:host.stream > * { /* any direct child */
+  position: relative;
+  max-width: 600px;
+  display: block;
+  margin: 0px 16px 16px 16px;
+  border-bottom: 1px solid lightgrey;
+}
+
+:host.stream > *[editing="true"] {
+/*  background-color: pink; */
+}
+
+:host.quilt > * { /* any direct child */
+  max-width: 300px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+/* Responsive stuff */
+@media screen and (min-width: 1100px){
+  /* 1100 px or greater screen - 4x 250px*/
+  :host.quilt{
+    width: 1100px;
+    margin-left: -33px;
+  }
+  :host.quilt > * {
+    width: 250px;
+    display: inline-block;
+    margin-left: 33px;
+  }
+
+  :host.quilt > *[editing="true"] {
+    background-color: pink;
+    min-width: 533px;
+    display: inline-block;
+    margin-left: 33px;
+  }
+}

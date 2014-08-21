@@ -14,10 +14,10 @@ attributes="title editing"
       :host{
         display: block;
         position: relative;
-        width: 600px; 
+        width: 632px; 
         margin: auto;
         box-sizing: border-box;
-        padding: 8px;
+        padding: 8px 16px 8px 16px;
       }
       @media screen and (max-width: 600px){
         :host{
@@ -67,7 +67,7 @@ attributes="title editing"
       publish: { // If you want to expose properties as tag attributes
         title: {value:null, reflect:true},
         editing: false,
-        z: {value:"0", reflect:true},
+        z: {value:"1", reflect:true},
       },
       titleInputChanged: function(e){
         // The stock on-change only triggers when you commit the input with
@@ -98,14 +98,14 @@ attributes="title editing"
         // Start editing on focus
         this.$.titleInput.addEventListener('focus', function(e){
           that.editing = true;
-          that.z = 1;
+          that.z = 2;
         });
 
         // Stop editing on blur, but only if the input is blank.
         this.$.titleInput.addEventListener('blur', function(e){
           if(that.title === null || that.title === ""){
             that.editing = false;
-            that.z = 0;
+            that.z = 1;
           }
         });
       },
@@ -116,7 +116,7 @@ attributes="title editing"
         this.fire('group-card-create', {title: this.title});
         this.title = "";
         this.editing = false;
-        this.z = 0;
+        this.z = 1;
       },
     });
   </script>

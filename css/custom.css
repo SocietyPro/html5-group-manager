@@ -45,6 +45,8 @@ core-icon-button:focus{
 }
 #addGroupCardButton:focus core-icon, #addGroupCardButton:hover core-icon{
   transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
 }
 
 /* Reposition FAB when screen shrinks enough that it interferes with titlebar */

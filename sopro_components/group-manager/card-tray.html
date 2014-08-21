@@ -3,57 +3,7 @@ name="card-tray"
 attributes="pattern"
 >
   <template>
-    <style>
-      :host{
-        display: block;
-        position: relative;
-        height: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        font-size: 0em;
-      }
-      :host > *{
-        font-size: 1em;
-      }
-      :host.stream > * { /* any direct child */
-        width: 100%;
-        display: block;
-        border-bottom: 1px solid lightgrey;
-      }
-
-      :host.stream > *[editing="true"] {
-        margin: 10px 0;
-        background-color: pink;
-      }
-
-      :host.quilt > * { /* any direct child */
-        max-width: 300px;
-        display: inline-block;
-        margin-bottom: 8px;
-      }
-
-      /* Responsive stuff */
-      @media screen and (min-width: 1100px){
-        /* 1100 px or greater screen - 4x 250px*/
-        :host.quilt{
-          width: 1100px;
-          margin-left: -33px;
-
-        }
-        :host.quilt > * {
-          width: 250px;
-          display: inline-block;
-          margin-left: 33px;
-        }
-
-        :host.quilt > *[editing="true"] {
-          background-color: pink;
-          min-width: 533px;
-          display: inline-block;
-          margin-left: 33px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./card-tray.css">
     <content></content>
 
   </template>
