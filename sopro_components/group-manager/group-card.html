@@ -7,6 +7,9 @@
 name="group-card" 
 attributes="cardtitle type number editing z"
 extends="sopro-card"
+tabindex="-1"
+on-focus="{{onFocuses}}"
+on-blur="{{onBlurs}}"
 >
   <template >
     <shadow></shadow>
@@ -53,7 +56,7 @@ extends="sopro-card"
     on-blur="{{onBlurs}}"
     id="card" 
     layout vertical
-    tabindex="0"
+    tabindex="-1"
     >
       <div layout horizontal>
         <h2 flex>{{cardtitle}}</h2>
@@ -145,7 +148,7 @@ extends="sopro-card"
         // Get the currently focused element
         try{ var aId = document.activeElement.id;
         } catch (e){ var aId = null; };
-        try{ var eId = e.explicitOriginalTarget.id
+        try{ var eId = e.srcElement.id || e.explicitOriginalTarget.id
         } catch (e){ var eId = null; };
         console.log(aId, eId);
         /* Pressing enter on children elements should not click the card. */
@@ -218,7 +221,7 @@ extends="sopro-card"
         this.addEventListener('keydown', function(e){
           //console.log(e);
           // Do nothing with keypresses on save button; they have their own handler
-          try{ var eId = e.explicitOriginalTarget.id
+          try{ var eId = e.srcElement.id || e.explicitOriginalTarget.id
           } catch (e){ var eId = null; };
           if( eId === 'saveCard' ){
             return;
@@ -250,7 +253,42 @@ extends="sopro-card"
           // Firefox doesn't let you use e.which for Escape:
           var code = e.keyCode ? e.keyCode : e.which;
           if(code === 27){ // Escape
-            that.stopEditing();
+            // Check if we hit Escape with a card selected. If so, focus the add new group element
+            var ae = document.activeElement;
+            if((ae.tagName.toUpperCase() == "GROUP-CARD")
+            || (aId === 'card')
+            ){
+              that.stopEditing();
+              // Put the focus in the input element within newCardTitlebar:
+              document.getElementById("newCardTitlebar").$.titleInput.focus();
+              return; 
+            } else { // Something else was selected. Stop editing (which focuses the card itself)
+              that.stopEditing();
+            }
+          };
+
+          if(code === 40){ // Down
+            e.preventDefault();
+            var sib = that.nextElementSibling;
+            if(sib !== null) { 
+              sib.focus();
+            } else { // Wrap to top
+              // Skip hidden template element at children[0]:
+              that.parentElement.children[1].focus();
+            }
+          };
+
+          if(code === 38){ // Up
+            e.preventDefault();
+            var sib = that.previousElementSibling;
+            // Our card-tray has a hidden template element before children group-cards
+            if(sib.tagName.toUpperCase()==="TEMPLATE"){ sib = null; };
+
+            if(sib !== null) { 
+              sib.focus();
+            } else { // Wrap to bottom
+              that.parentElement.lastElementChild.focus(); 
+            }
           };
 
         }, true);

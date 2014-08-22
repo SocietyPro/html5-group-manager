@@ -113,7 +113,7 @@ attributes="title editing"
         // Fire an event that tells the group-card index.html to instantiate a
         // new group-card element. Pass it the title.
         this.$.titleInput.blur();
-        this.fire('group-card-create', {title: this.title});
+        this.fire('group-card-create', {cardtitle: this.title});
         this.title = "";
         this.editing = false;
         this.z = 1;

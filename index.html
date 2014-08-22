@@ -50,7 +50,7 @@
           icon="view-quilt"></sopro-icon-button>
         </div>
         <div layout vertical center relative>
-          <group-card-titlebar></group-card-titlebar>
+          <group-card-titlebar id="newCardTitlebar"></group-card-titlebar>
           <card-tray id="cards" pattern="stream" tabindex="-1">
             <template id="cardsTemplate" is="auto-binding" repeat="{{groups}}">
               <group-card cardtitle="{{name}}"></group-card>
@@ -165,10 +165,10 @@
     /*
     Useful to see what is going on while debugging changing focus with the tab
     key:
-
     window.setInterval(function(){
       console.log(document.activeElement);
     }, 5000);
     */
+
   </script>
 </html>

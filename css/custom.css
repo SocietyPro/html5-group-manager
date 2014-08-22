@@ -29,7 +29,9 @@ core-icon-button:focus{
 }
 #addGroupCardButton{
   display: block;
-  position: absolute;
+  position: fixed;
+  width: 56px;
+  height: 56px;
   right: 24px;
   bottom: 24px;
   z-index: 5;
@@ -41,17 +43,11 @@ core-icon-button:focus{
 }
 /* Spin the cross button when you focus: */
 #addGroupCardButton core-icon{
+  color: white;
   transition: transform ease-in-out 0.6s;
 }
 #addGroupCardButton:focus core-icon, #addGroupCardButton:hover core-icon{
   transform: rotate(360deg);
   -moz-transform: rotate(360deg);
   -webkit-transform: rotate(360deg);
-}
-
-/* Reposition FAB when screen shrinks enough that it interferes with titlebar */
-@media screen and (max-width: 776px){
-  #addGroupCardButton{
-    top: 100%;
-  }
 }

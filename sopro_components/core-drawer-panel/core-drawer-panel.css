@@ -158,5 +158,5 @@ polyfill-next-selector { content: ':host .narrow-layout > #main > [main]'; }
   margin-left: 0px;
 }
 #mainPanel {
-  background-color: #CCCCCC;
+  background-color: #eeeeee;
 }
