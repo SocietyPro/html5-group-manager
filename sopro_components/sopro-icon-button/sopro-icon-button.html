@@ -74,10 +74,11 @@ how to use a custom icon set.
         var that = this;
         this.addEventListener('keypress', function(e){
           if(e.which === 13 || e.which === 32){
+            console.log('Space/Enter detected on sopro-icon-button. Clicking button and stopping propagation.');
             that.click();
+            e.stopPropagation();
           };
-          e.stopPropagation();
-        });
+        }, true);
       },
 
       activeChanged: function() {

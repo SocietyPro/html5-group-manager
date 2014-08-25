@@ -210,6 +210,7 @@ on-blur="{{onBlurs}}"
 
         // Make clicks on the button stop propagating:
         this.$.saveCard.addEventListener('click', function(e){
+          console.log('saveCardClicked, stopping propagation');
           that.stopEditing();
           e.stopPropagation();
         });
@@ -221,11 +222,26 @@ on-blur="{{onBlurs}}"
         this.addEventListener('keydown', function(e){
           //console.log(e);
           // Do nothing with keypresses on save button; they have their own handler
-          try{ var eId = e.srcElement.id || e.explicitOriginalTarget.id
-          } catch (e){ var eId = null; };
+          console.log('Keydown event:');
+          console.log(e);
+          console.log(e.originalTarget);
+          try{ 
+            var eId = e.srcElement.id;
+            console.log('eId, in try block');
+            console.log(eId);
+          } catch (err){ 
+            try{
+              var eId = e.originalTarget.id
+            } catch(err2){
+              console.log('error caught');
+              console.log(err2);
+              var eId = null; 
+            }
+          };
           if( eId === 'saveCard' ){
             return;
           };
+          console.log('Best I know, the keydown was NOT on saveCard.');
 
           // Figure out what has focus when the key was pressed:
           try{
@@ -243,7 +259,7 @@ on-blur="{{onBlurs}}"
             that.startEditing(); // Enter on card itself means edit
           };
           
-          if(e.which === 32){
+          if(e.which === 32){ //Space
             if(aId === 'cardTitle' || aId === 'input'){
               return; // Space on title field is meaningless
             };
@@ -291,7 +307,7 @@ on-blur="{{onBlurs}}"
             }
           };
 
-        }, true);
+        }, false);
 
 
         // There are a pair of tabCatcher divs around #card.
