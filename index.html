@@ -67,20 +67,20 @@
               </material-groupcard>
             </div>
             <material-list ng-show="listView === 'stream'">
-              <material-item ng-repeat="entry in myGroups" ng-click="toggleEntry(entry)">
+              <material-item ng-repeat="group in myGroups" ng-click="toggleEntry(group)">
                 <div class="material-tile-left">
                   <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_group_48dp.png" class="face">
                 </div>
                 <div class="material-tile-content">
-                  <h2>{{entry.name}}</h2>
+                  <h2>{{group.name}}</h2>
                   <material-list>
                     <div  ng-show="entry.isActive === true" class="animate-show">
-                      <material-item ng-repeat="peer in myPeers">
+                      <material-item ng-repeat="member in group.members">
                         <div class="material-tile-left">
                           <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png" class="face">
                         </div>
                         <div class="material-tile-content">
-                          <h2>{{peer.name}}</h2>
+                          <h2>{{member.name}}</h2>
                         </div>
                       </material-item>
                     </div>

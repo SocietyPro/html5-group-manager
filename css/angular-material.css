@@ -2653,3 +2653,49 @@ a.material-button {
   .material-button-group > .material-button:last-child {
     border-right-width: 1px;
     border-radius: 0px 2px 2px 0px; }
+
+label {
+  display: block;
+  font-size: 0.85em; }
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+  display: block;
+  border-width: 0 0 1px 0;
+  line-height: 30px;
+  font-size: 0.85em; }
+  textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus {
+    outline: 0; }
+
+input, textarea {
+  background: none; }
+  input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color: #a4a4a4; }
+  input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #a4a4a4; }
+
+material-custom-input-group, .material-custom-input-group {
+  margin: 10px 0 10px 0;
+  position: relative; }
+  material-custom-input-group input, material-custom-input-group textarea, .material-custom-input-group input, .material-custom-input-group textarea {
+    -webkit-transition: all ease-out 300ms;
+    transition: all ease-out 300ms;
+    color: #111111; }
+  material-custom-input-group.material-input-group-inverted input, .material-custom-input-group.material-input-group-inverted input {
+    color: #f1f1f1; }
+  material-custom-input-group label, .material-custom-input-group label {
+    -webkit-font-smoothing: antialiased;
+    z-index: 1;
+    -webkit-transform: translate3d(0, 30px, 0);
+    transform: translate3d(0, 30px, 0);
+    -webkit-transform-origin: left center;
+    transform-origin: left center;
+    -webkit-transition: all ease-out 300ms;
+    transition: all ease-out 300ms;
+    color: #a4a4a4; }
+    material-custom-input-group label:hover, .material-custom-input-group label:hover {
+      cursor: text; }
+  material-custom-input-group.material-input-focused input, material-custom-input-group.material-input-has-value input, .material-custom-input-group.material-input-focused input, .material-custom-input-group.material-input-has-value input {
+    border-bottom-width: 2px; }
+  material-custom-input-group.material-input-focused label, material-custom-input-group.material-input-has-value label, .material-custom-input-group.material-input-focused label, .material-custom-input-group.material-input-has-value label {
+    -webkit-transform: translate3d(0, 0, 0) scale(0.85);
+    transform: translate3d(0, 0, 0) scale(0.85); }
