@@ -4029,7 +4029,7 @@ function materialGroupcardDirective() {
       $scope.toggleCard = function () {
         $scope.group.isActive = !$scope.group.isActive;
         $element.addClass('active');
-        $scope.avatar = "/img/list/60.jpeg"
+        $scope.avatar = "material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png";
       };
     },
     template:
@@ -4042,7 +4042,7 @@ function materialGroupcardDirective() {
                 '<img ng-src={{avatar}} class="face">' +
               '</div>' +
               '<div class="material-tile-content">' +
-                '<h2>{{member.name}}</h2>' +
+                '<h2>{{member.name || member.id}}</h2>' +
               '</div>' +
             '</material-item>' +
           '</material-list>' +

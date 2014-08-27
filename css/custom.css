@@ -27,6 +27,10 @@ core-icon-button:focus{
   width: 100%;
 }
 
+.clearBoth {
+  clear: both;
+}
+
 #quiltContainer > * {
   vertical-align: top;
 }
