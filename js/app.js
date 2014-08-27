@@ -62,8 +62,8 @@ appModule = angular.module("app", ['ngMaterial'])
     $scope.listView = "quilt";
   };
 
-  $scope.toggleEntry = function (entry) {
-    entry.isActive = !entry.isActive;
+  $scope.toggleGroup = function (group) {
+    group.isActive = !group.isActive;
   };
 })
 .directive('ig', function() {
@@ -75,7 +75,7 @@ appModule = angular.module("app", ['ngMaterial'])
     },
     template: 
       '<material-input-group>' +
-        '<label for="{{fid}}">Add a group...</label>' +
+        '<label for="{{fid}}">Add a peer list...</label>' +
         '<material-input id="{{fid}}" type="text" size="50" ng-model="data.description">' +
       '</material-input-group>'
   };
