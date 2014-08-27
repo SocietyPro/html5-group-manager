@@ -15,12 +15,30 @@ core-icon-button:focus{
   vertical-align: middle;
 }
 
-#listMorphButtons {
+#viewButtons {
   float: right;
+}
+
+.menu-icon material-icon {
+  top: 0;
 }
 
 .mainTitle {
   width: 100%;
+}
+
+#quiltContainer > * {
+  vertical-align: top;
+}
+
+#groupQuickAddBox {
+  border: 1px solid lightgrey;
+  display: block;
+  position: relative;
+  width: 500px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 8px;
 }
 
 #addGroupCardButton {
@@ -50,4 +68,8 @@ core-icon-button:focus{
   transform: rotate(360deg);
   -moz-transform: rotate(360deg);
   -webkit-transform: rotate(360deg);
+}
+
+material-item {
+  align-items: flex-start;
 }
