@@ -31,6 +31,10 @@ core-icon-button:focus{
   clear: both;
 }
 
+.content-padding {
+  padding: 20px;
+}
+
 #quiltContainer > * {
   vertical-align: top;
 }

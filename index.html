@@ -8,8 +8,6 @@
     <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
     <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
     <script src="js/app.js" type="text/javascript"></script>
-    
-    <link rel="import" href="bower_components/font-roboto/roboto.html">
 
     <link rel="stylesheet" type="text/css" href="assets/plugins/font-awesome-4.1.0/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="css/angular-material.css">
@@ -55,17 +53,21 @@
             </div>
           </div>
         </material-toolbar>
-        <material-content class="material-content-padding">
+        <div class="content-padding">
           <div id="groupQuickAddBox">
             <form style="padding-left:20px;">
               <ig fid="a" class="material-input-group-theme-light" size="300"></ig>
             </form>
           </div>
           <div ng-show="listContains === 'myGroups'">
+
+            <!-- Quilt View -->
             <div ng-show="listView === 'quilt'" id="quiltContainer">
               <material-groupcard ng-repeat="group in myGroups">
               </material-groupcard>
             </div>
+
+            <!-- Stream View -->
             <material-list ng-show="listView === 'stream'">
               <material-item ng-repeat="group in myGroups" ng-click="toggleGroup(group)">
                 <div class="material-tile-left">
@@ -75,6 +77,7 @@
                   <h2>{{group.name}}</h2>
                   <material-list>
                     <div  ng-show="group.isActive === true" class="animate-show">
+                      
                       <material-item ng-repeat="member in group.members">
                         <div class="material-tile-left">
                           <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png" class="face">
@@ -83,15 +86,17 @@
                           <h2>{{member.name || member.id}}</h2>
                         </div>
                       </material-item>
+                    
                     </div>
                   </material-list>
                 </div>
                 
               </material-item>
             </material-list>
+
           </div>
           <div class="clearBoth"></div>
-        </material-content>
+        </div>
       </div>
 
     </div>
