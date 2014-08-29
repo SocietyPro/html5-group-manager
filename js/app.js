@@ -98,10 +98,15 @@ appModule = angular.module("app", ['ngMaterial'])
       targetEvent: e,
       controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
         $scope.group = group;
-        console.log($scope);
         $scope.close = function () {
           $hideDialog();
         };
+
+        $scope.save = function (group) {
+          $scope.group.save;
+          $hideDialog();
+        };
+
       }]
     });
   };
