@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" tabindex="-1">
+<htmltabindex="-1">
   <head>  
     <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="bower_components/angular/angular.js" type="text/javascript"></script>
@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/docs.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
-  <body unresolved ng-controller="appCtrl" tabindex="-1">
+  <body unresolved ng-app="app" ng-controller="appCtrl" tabindex="-1">
 
     <div id="applicationContainer" layout="horizontal">
 
@@ -75,8 +75,17 @@
           <div ng-show="listContains === 'myGroups'">
 
             <!-- Quilt View -->
-            <div ng-show="listView === 'quilt'" id="quiltContainer">
-              <div class="cardholder" ng-repeat="group in myGroups">
+            <div ng-show="listView === 'quilt'">
+              
+              <!--
+              <div class="inset full">
+                <material-button class="material-button-colored" ng-click="dialog($event)">
+                  Open a dialog
+                </material-button>
+              </div>
+              -->
+              
+              <div class="cardholder" ng-repeat="group in myGroups" ng-click="dialog($event, group)">
                 <material-groupcard>
                 </material-groupcard>
                 <div class="overflowMenu animate-show" ng-show="group.overflow">

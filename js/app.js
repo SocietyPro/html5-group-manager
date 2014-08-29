@@ -29,7 +29,7 @@ appModule = angular.module("app", ['ngMaterial'])
   };
 
 }])
-.controller("appCtrl", function ($scope, $materialSidenav, menu, $rootScope, $element) {
+.controller("appCtrl", function ($scope, $materialSidenav, $materialDialog, menu, $rootScope, $element) {
   
   $scope.menu = menu;
   $scope.menu.selectGroup(menu.groups[0]);
@@ -90,6 +90,20 @@ appModule = angular.module("app", ['ngMaterial'])
       $scope.myGroups.splice(index, 1);  
     }
     group.overflow = false;
+  };
+
+  $scope.dialog = function (e, group) {
+    $materialDialog({
+      templateUrl: 'partials/editGroupCard.tmpl.html',
+      targetEvent: e,
+      controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+        $scope.group = group;
+        console.log($scope);
+        $scope.close = function () {
+          $hideDialog();
+        };
+      }]
+    });
   };
 
 });
