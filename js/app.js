@@ -29,7 +29,7 @@ appModule = angular.module("app", ['ngMaterial'])
   };
 
 }])
-.controller("appCtrl", function ($scope, $materialSidenav, menu, $rootScope) {
+.controller("appCtrl", function ($scope, $materialSidenav, menu, $rootScope, $element) {
   
   $scope.menu = menu;
   $scope.menu.selectGroup(menu.groups[0]);
@@ -37,6 +37,8 @@ appModule = angular.module("app", ['ngMaterial'])
   $scope.myPeers = japi.me.peers;
   $scope.myGroups = japi.me.groups;
   $scope.myPeerLists = japi.me.peerLists;
+  $scope.groupTypes = ['Broadcast List'];
+  $scope.newGroupType = $scope.groupTypes[0];
 
   for (var i=0; i < $scope.myGroups.length; i++) {
     $scope.myGroups[i].isActive = false;
@@ -52,7 +54,7 @@ appModule = angular.module("app", ['ngMaterial'])
     $materialSidenav('left').toggle();
   };
 
-  $scope.listView = "stream";
+  $scope.listView = "quilt";
 
   $scope.streamView = function () {
     $scope.listView = "stream";
@@ -65,18 +67,29 @@ appModule = angular.module("app", ['ngMaterial'])
   $scope.toggleGroup = function (group) {
     group.isActive = !group.isActive;
   };
-})
-.directive('ig', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    scope: {
-      fid: '@'
-    },
-    template: 
-      '<material-input-group>' +
-        '<label for="{{fid}}">Add a peer list...</label>' +
-        '<material-input id="{{fid}}" type="text" size="50" ng-model="data.description">' +
-      '</material-input-group>'
+
+  $scope.newGroup = function () {
+    var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    $scope.myGroups.push(groupToAdd);
+    $scope.newGroupTitle = "";
+    $scope.quickAddForm.$setPristine();
   };
+
+  $scope.duplicateGroup = function (group) {
+    var buildGroup = angular.copy(group);
+    buildGroup.name = buildGroup.name + " (Duplicate)";
+    buildGroup.overflow = false;
+    $scope.myGroups.push(buildGroup);
+    group.overflow = false;
+  };
+
+  $scope.deleteGroup = function (group) {
+    var index = $scope.myGroups.indexOf(group);
+
+    if (index > -1) {
+      $scope.myGroups.splice(index, 1);  
+    }
+    group.overflow = false;
+  };
+
 });

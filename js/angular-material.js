@@ -4012,12 +4012,6 @@ angular.module('material.components.groupcard', [
  * @usage
  * <hljs lang="html">
  *  <material-groupcard>
- *    <img src="/img/washedout.png" class="material-card-image">
- *    <h2>Paracosm</h2>
- *    <p>
- *      The titles of Washed Out's breakthrough song and the first single from Paracosm share the
- *      two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
- *    </p>
  *  </material-groupcard>
  * </hljs>
  *
@@ -4026,26 +4020,25 @@ function materialGroupcardDirective() {
   return {
     restrict: 'E',
     controller: function ($scope, $element) {
-      $scope.toggleCard = function () {
-        $scope.group.isActive = !$scope.group.isActive;
-        $element.addClass('active');
-        $scope.avatar = "material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png";
+      $scope.overflowToggle = function (group) {
+        $scope.group.overflow = !$scope.group.overflow;
       };
     },
     template:
-      '<div class="groupcardHotspot" ng-click="toggleCard()">' + 
-        '<h2>{{group.name}}</h2>' +
-        '<div class="animate-show" ng-show="group.isActive">' +
-          '<material-list>' +
-            '<material-item ng-repeat="member in group.members">' +
-              '<div class="material-tile-left">' +
-                '<img ng-src={{avatar}} class="face">' +
-              '</div>' +
-              '<div class="material-tile-content">' +
-                '<h2>{{member.name || member.id}}</h2>' +
-              '</div>' +
-            '</material-item>' +
-          '</material-list>' +
+      '<div>' + 
+        '<h3>{{group.name}}</h3>' +
+        '<div class="lightDetails">' +
+          '{{group.groupType}}' +
+          '<div class="groupCount">' +
+            '<img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">' +
+            '{{group.members.length}}' +
+          '</div>' +
+          '<div class="clearBoth"></div>' +
+        '</div>' +
+        '<div class="groupCardMenuBar">' +
+          '<material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle()">' +
+            '<img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">' +
+          '</material-button>' +
         '</div>' +
       '</div>'
   };

@@ -44,27 +44,46 @@
               <h2>Groups & Governance</h2>
             </div>
             <div id="viewButtons" layout="horizontal">
-              <material-button ng-click="streamView()">
+              <material-button class="material-button-icon" ng-click="streamView()">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_48dp.png"></material-icon>
               </material-button>
-              <material-button ng-click="quiltView()">
+              <material-button class="material-button-icon" ng-click="quiltView()">
                 <material-icon icon="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_48dp.png"></material-icon>
               </material-button>
             </div>
           </div>
         </material-toolbar>
         <div class="content-padding">
-          <div id="groupQuickAddBox">
-            <form style="padding-left:20px;">
-              <ig fid="a" class="material-input-group-theme-light" size="300"></ig>
+
+          <!-- Quick Add Box -->
+          <div id="quickAddBox">
+            <form name="quickAddForm" style="padding-left:20px;">
+              <material-input-group>
+                <label for="quickAddTitle">Add a group...</label>
+                <material-input name="quickAddTitle" id="quickAddTitle" type="text" size="45" ng-model="newGroupTitle" flex>
+              </material-input-group>
+              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
+                <select ng-model="newGroupType" ng-options="groupType for groupType in groupTypes"></select>
+                <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
+                  SAVE
+                </material-button>
+              </div>
             </form>
           </div>
+          <!-- end Quick Add Box -->
+
           <div ng-show="listContains === 'myGroups'">
 
             <!-- Quilt View -->
             <div ng-show="listView === 'quilt'" id="quiltContainer">
-              <material-groupcard ng-repeat="group in myGroups">
-              </material-groupcard>
+              <div class="cardholder" ng-repeat="group in myGroups">
+                <material-groupcard>
+                </material-groupcard>
+                <div class="overflowMenu animate-show" ng-show="group.overflow">
+                  <a ng-click="duplicateGroup(group)">Duplicate Group</a><br />
+                  <a ng-click="deleteGroup(group)">Delete Group</a>
+                </div>
+              </div>
             </div>
 
             <!-- Stream View -->
@@ -75,6 +94,7 @@
                 </div>
                 <div class="material-tile-content">
                   <h2>{{group.name}}</h2>
+                  {{group.groupType}}
                   <material-list>
                     <div  ng-show="group.isActive === true" class="animate-show">
                       
@@ -100,5 +120,33 @@
       </div>
 
     </div>
+    <script>
+     /*
+      document.addEventListener("DOMContentLoaded", function () {
+        var quickAddBox = document.getElementById("groupQuickAddBox");
+        var quickAddTitle = document.getElementById("quickAddTitle");
+        quickAddTitle.addEventListener("focus", toggleAddButton);
+        quickAddTitle.addEventListener("blur", toggleAddButton);
+
+        function toggleAddButton (e) {
+          var selected = quickAddBox.contains(document.activeElement);
+          console.log('Focus somewhere in quickAddBox:',selected);
+          var submit = document.getElementById("quickAddGroupButton");
+
+          if (selected) {
+            submit.classList.remove('notVisible');
+          } else {
+            submit.classList.add('notVisible');
+          }
+        }
+
+        window.setInterval(function(){
+          console.log(document.activeElement);
+          //console.log(quickAddBox.contains(document.activeElement));
+        }, 5000);
+
+      });
+    */    
+    </script>
   </body>
 </html>
