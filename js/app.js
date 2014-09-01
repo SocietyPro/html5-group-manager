@@ -64,8 +64,8 @@ appModule = angular.module("app", ['ngMaterial'])
     $scope.listView = "quilt";
   };
 
-  $scope.toggleGroup = function (group) {
-    group.isActive = !group.isActive;
+  $scope.overflowToggle = function (group) {
+    group.overflow = !group.overflow;
   };
 
   $scope.newGroup = function () {

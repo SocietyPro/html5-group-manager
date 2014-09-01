@@ -1,13 +1,28 @@
 body{
   font-family: "RobotoDraft";
 }
-sopro-card{
-  margin-bottom: 8px;
+
+/* material-card syles */
+material-card{
+  background-color: lightgreen;
+  display: inline-block;
+  min-height: 100px;
+  min-width: 200px;
 }
+
+.lightDetails {
+  opacity: 0.4;
+  margin-bottom: 10px;
+}
+
+.groupCount {
+  float: right;
+  vertical-align: top;
+}
+/* end material-card styles */
+
 core-icon-button:focus{
   background-color: rgba(0,0,0,0.54);
-}
-#cards{
 }
 
 #titleText {
@@ -37,6 +52,9 @@ core-icon-button:focus{
   padding: 20px;
 }
 
+.groupListsContainer {
+  height: 100vh;
+}
 #quiltContainer > * {
   vertical-align: top;
 }

@@ -71,91 +71,81 @@
             </form>
           </div>
           <!-- end Quick Add Box -->
+          <material-content class="groupListsContainer" scroll-y flex>
+            <div ng-show="listContains === 'myGroups'">
 
-          <div ng-show="listContains === 'myGroups'">
+              <!-- Quilt View -->
+              <div ng-show="listView === 'quilt'">
 
-            <!-- Quilt View -->
-            <div ng-show="listView === 'quilt'">
-              
-              <!--
-              <div class="inset full">
-                <material-button class="material-button-colored" ng-click="dialog($event)">
-                  Open a dialog
-                </material-button>
-              </div>
-              -->
-              
-              <div class="cardholder" ng-repeat="group in myGroups" ng-click="dialog($event, group)">
-                <material-groupcard>
-                </material-groupcard>
-                <div class="overflowMenu animate-show" ng-show="group.overflow">
-                  <a ng-click="duplicateGroup(group)">Duplicate Group</a><br />
-                  <a ng-click="deleteGroup(group)">Delete Group</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Stream View -->
-            <material-list ng-show="listView === 'stream'">
-              <material-item ng-repeat="group in myGroups" ng-click="toggleGroup(group)">
-                <div class="material-tile-left">
-                  <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_group_48dp.png" class="face">
-                </div>
-                <div class="material-tile-content">
-                  <h2>{{group.name}}</h2>
-                  {{group.groupType}}
-                  <material-list>
-                    <div  ng-show="group.isActive === true" class="animate-show">
-                      
-                      <material-item ng-repeat="member in group.members">
-                        <div class="material-tile-left">
-                          <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png" class="face">
-                        </div>
-                        <div class="material-tile-content">
-                          <h2>{{member.name || member.id}}</h2>
-                        </div>
-                      </material-item>
+                <!-- material-card for groups -->  
+                <div class="cardholder" ng-repeat="group in myGroups">
+                  <material-card>
                     
+                    <div ng-click="dialog($event, group)">
+                      <h3>{{group.name}}</h3>
+                      <div class="lightDetails">
+                        {{group.groupType}}
+                        <div class="groupCount">
+                          <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"> 
+                          {{group.members.length}}
+                        </div>
+                        <div class="clearBoth"></div>
+                      </div>
                     </div>
-                  </material-list>
-                </div>
-                
-              </material-item>
-            </material-list>
+                    
+                    <div class="groupCardMenuBar">
+                      <material-button class="material-button-icon overflowMenuButton" ng-click="overflowToggle(group)">
+                        <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
+                      </material-button>
+                    </div>
 
-          </div>
+                  </material-card>
+                  
+                  <div class="overflowMenu animate-show" ng-show="group.overflow">
+                    <a ng-click="duplicateGroup(group)">Duplicate Group</a><br />
+                    <a ng-click="deleteGroup(group)">Delete Group</a>
+                  </div>
+                </div>
+              </div>
+              <!-- end material-card for groups -->
+
+              <!-- Stream View -->
+              <material-list ng-show="listView === 'stream'">
+                <material-item ng-repeat="group in myGroups" ng-click="toggleGroup(group)">
+                  <div class="material-tile-left">
+                    <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_group_48dp.png" class="face">
+                  </div>
+                  <div class="material-tile-content">
+                    <h2>{{group.name}}</h2>
+                    {{group.groupType}}
+                    <material-list>
+                      <div  ng-show="group.isActive === true" class="animate-show">
+                        
+                        <material-item ng-repeat="member in group.members">
+                          <div class="material-tile-left">
+                            <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png" class="face">
+                          </div>
+                          <div class="material-tile-content">
+                            <h2>{{member.name || member.id}}</h2>
+                          </div>
+                        </material-item>
+                      
+                      </div>
+                    </material-list>
+                  </div>
+                  
+                </material-item>
+              </material-list>
+
+            </div>
+          </material-content>
           <div class="clearBoth"></div>
         </div>
       </div>
 
     </div>
     <script>
-     /*
-      document.addEventListener("DOMContentLoaded", function () {
-        var quickAddBox = document.getElementById("groupQuickAddBox");
-        var quickAddTitle = document.getElementById("quickAddTitle");
-        quickAddTitle.addEventListener("focus", toggleAddButton);
-        quickAddTitle.addEventListener("blur", toggleAddButton);
-
-        function toggleAddButton (e) {
-          var selected = quickAddBox.contains(document.activeElement);
-          console.log('Focus somewhere in quickAddBox:',selected);
-          var submit = document.getElementById("quickAddGroupButton");
-
-          if (selected) {
-            submit.classList.remove('notVisible');
-          } else {
-            submit.classList.add('notVisible');
-          }
-        }
-
-        window.setInterval(function(){
-          console.log(document.activeElement);
-          //console.log(quickAddBox.contains(document.activeElement));
-        }, 5000);
-
-      });
-    */    
+      
     </script>
   </body>
 </html>
