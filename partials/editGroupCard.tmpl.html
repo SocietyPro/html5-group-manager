@@ -1,9 +1,45 @@
+<style>
+.dialog-content{
+  overflow-x: hidden;
+}
+</style>
 <material-dialog>
-  <div class="dialog-content">
-    <input ng-model="group.name">
-    <p>
-      group edit content go here
-    </p>
+  <div layout="vertical" class="dialog-content">
+    <material-input 
+    block 
+    ng-model="group.name">
+    </material-input>
+    <div flex layout="horizontal" class="dialog-content">
+
+      <section flex="50" class="members">
+        <material-list>
+          <material-item 
+          ng-repeat="member in group.members"
+          layout="horizontal"
+          >
+            <span flex>{{member.name || member.id }}</span>
+            <img 
+            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
+            ng-click="group.removePeer(member)"
+            >
+          </material-item>
+        </material-list>
+      </section>
+      <section flex="50" class="peers">
+        <material-list>
+          <material-item 
+          ng-repeat="peer in japi.me.peers | filter:nonMembers"
+          layout="horizontal"
+          >
+            <img 
+            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
+            ng-click="group.addPeer(peer)"
+            >
+            <span flex>{{peer.name || peer.id }}</span>
+          </material-item>
+        </material-list>
+      </section>
+    </div>    
   </div>
   <div class="dialog-actions" layout="horizontal" layout-end="end">
     <material-button ng-click="close()">

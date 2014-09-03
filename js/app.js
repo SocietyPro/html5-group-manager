@@ -84,6 +84,8 @@ appModule = angular.module("app", ['ngMaterial'])
   };
 
   $scope.deleteGroup = function (group) {
+    var confirmed = confirm('Are you sure you want to permanently remove the group:\n'+(group.name || ""));
+    if(!confirmed){ return }
     var index = $scope.myGroups.indexOf(group);
 
     if (index > -1) {
@@ -98,6 +100,15 @@ appModule = angular.module("app", ['ngMaterial'])
       targetEvent: e,
       controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
         $scope.group = group;
+        $scope.japi = japi;
+        $scope.nonMembers = function(item){
+          var i = $scope.group.members.indexOf(item);
+          if(i === -1){
+            return true; // this nonmember should be shown
+          } else {
+            return false; // this member should be hidden
+          }
+        };
         $scope.close = function () {
           $hideDialog();
         };
