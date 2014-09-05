@@ -101,20 +101,22 @@ appModule = angular.module("app", ['ngMaterial'])
       controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
         $scope.group = group;
         $scope.japi = japi;
-        $scope.nonMembers = function(item){
-          var i = $scope.group.members.indexOf(item);
-          if(i === -1){
-            return true; // this nonmember should be shown
-          } else {
-            return false; // this member should be hidden
+
+        // Filter to display only nonMembers:
+        $scope.nonMembers = function(peer){
+          for(var i=0; i<$scope.group.members.length; i++){
+            if(angular.equals($scope.group.members[i], peer)){ // Peer was found
+              return false; // this member should be hidden
+            }
           }
+          return true; // this nonmember should be shown
         };
         $scope.close = function () {
           $hideDialog();
         };
 
         $scope.save = function (group) {
-          $scope.group.save;
+          $scope.group.save();
           $hideDialog();
         };
 

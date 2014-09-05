@@ -1,6 +1,130 @@
 <style>
 .dialog-content{
+  /* Force the dialog-content div to not scroll. We only want the actual lists to scroll. */
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+.sectionTitle{
+  text-transform: uppercase;
+  font-weight: lighter;
+  text-align: center;
+  font-size: 24px;
+  line-height: 24px;
+  height: 24px;
+}
+.dialog-content section{
+  margin-top: 8px;
+  overflow: hidden;
+}
+section material-list{
+  overflow-y: auto;
   overflow-x: hidden;
+}
+/* Animations for moving peers around */
+/* Left list - Group members */
+/* Enter - This triggers when new peers are added to the group. Slide in from right. */
+.membersAnimate.ng-enter{
+  -webkit-transition: 0.3s ease-out all; /* Chrome */
+  transition: 0.3s ease-out all;
+  opacity: 0;
+  margin-left: 100%;
+}
+.membersAnimate.ng-enter.ng-enter-active{
+  opacity: 1;
+  margin-left: 0;
+}
+.membersAnimate.ng-enter-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* Leave - This triggers when peers are removed from the group. Slide out to right. */
+.membersAnimate.ng-leave{
+  -webkit-transition: 0.5s ease-out all; /* Chrome */
+  transition: 0.5s ease-out all;
+  opacity: 1;
+  margin-left: 0;
+}
+.membersAnimate.ng-leave.ng-leave-active{
+  opacity: 0;
+  margin-left: 100%;
+}
+.membersAnimate.ng-leave-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* Move - This triggers when the index of a member changes. */
+.membersAnimate.ng-move{
+  -webkit-transition: 1s ease all; /* Chrome */
+  transition: 1s ease all;
+}
+.membersAnimate.ng-move.ng-move-active{
+}
+
+/* Right list - Other Peers */
+/* Enter - This triggers when new peers are added; or existing peers are removed from the group. Slide in from left. */
+.peersAnimate.ng-enter{
+  -webkit-transition: 0.3s ease all; /* Chrome */
+  transition: 0.3s ease all;
+  opacity: 0;
+  margin-left: -100%;
+}
+.peersAnimate.ng-enter.ng-enter-active{
+  opacity: 1;
+  margin-left: 0;
+}
+.peersAnimate.ng-enter-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* Leave - This triggers when existing peers are added to the group. Slide out to left. */
+.peersAnimate.ng-leave{
+  -webkit-transition: 0.5s ease-out all; /* Chrome */
+  transition: 0.5s ease-out all;
+  opacity: 1;
+  margin-right: 0;
+}
+.peersAnimate.ng-leave.ng-leave-active{
+  opacity: 0;
+  margin-right: 100%;
+}
+.peersAnimate.ng-leave-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+/* Leave - This triggers when existing peers are added to the group. Slide out to left. */
+.peersAnimate.ng-move{
+  -webkit-transition: 1s ease all; /* Chrome */
+  transition: 1s ease all;
+}
+.peersAnimate.ng-move.ng-move-active{
 }
 </style>
 <material-dialog>
@@ -10,11 +134,12 @@
     ng-model="group.name">
     </material-input>
     <div flex layout="horizontal" class="dialog-content">
-
-      <section flex="50" class="members">
+      <section flex="50" class="members" layout="vertical">
+        <span block class="sectionTitle">Group Members</span>
         <material-list>
           <material-item 
-          ng-repeat="member in group.members"
+          ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
+          class="membersAnimate"
           layout="horizontal"
           >
             <span flex>{{member.name || member.id }}</span>
@@ -25,10 +150,12 @@
           </material-item>
         </material-list>
       </section>
-      <section flex="50" class="peers">
+      <section flex="50" class="peers" layout="vertical">
+        <span block class="sectionTitle">Other Peers</span>
         <material-list>
           <material-item 
-          ng-repeat="peer in japi.me.peers | filter:nonMembers"
+          ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
+          class="peersAnimate"
           layout="horizontal"
           >
             <img 

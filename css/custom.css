@@ -3,54 +3,67 @@ body{
   overflow: hidden;
 }
 
-/* 
-TODO: Make left nav togglable on md+ screens. The following was removed from a local copy 
-of angular-material.css but it will return when compiled until we fork sidenav. See:
-https://github.com/angular/material/blob/master/src/components/sidenav/_sidenav.scss#L44
+/*  TODO: Make left nav togglable on md+ screens. Our local copy  of angular-
+material.css has the offending sidenav mediaquery removed, but it will return
+when compiled until we fork sidenav. 
+See: https://github.com/angular/material/blob/master/src/components/sidenav/_sidenav.scss#L44 
 */
 
-div .cardMenuBar {
- background-color: rgba(0, 0, 0, 0.3);
- min-height: 28px;
- margin: 0 -5px 0 -5px;
-/*
- padding: 5px;
- margin: -10px;
-*/
-}
-.overflowMenuButton {
- float: right;
-}
-.overflowMenu {
- z-index: 100;
- position: absolute;
- margin-right: 10px;
- margin-top: -10px;
- border: 1px solid grey;
- right: 0;
- top: 100%;
-}
-.overflowMenu a {
- cursor: pointer;
-} 
-
-material-card{
+material-card.groupCard{
   background-color: lightgreen;
   display: inline-block;
   min-height: 100px;
   min-width: 200px;
-  padding: 5px 5px 0px 5px;
+  padding: 16px 16px 0 16px;
 }
 
+material-card.groupCard h3{
+  min-height: 28px;
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.cardMenuBar{
+  visibility: hidden;
+}
+
+.cardholder:hover .cardMenuBar{
+  visibility: visible; 
+}
+
+.overflowMenuButton{
+  /* Brute force vertical align of 18px img in 24px cardMenuBar */
+  margin-top: 4px;
+}
 .lightDetails {
   opacity: 0.4;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+}
+.lightDetails span{
+  line-height: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+} 
+.lightDetails img{
+  line-height: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+}
+.lightDetails span.groupMemberLength{
+  margin-left: 8px;
+  text-align: right;
+  font-size: 14px;
 }
 
+/*
 .groupCount {
   float: right;
   vertical-align: top;
 }
+*/
 /* end material-card styles */
 
 core-icon-button:focus{
@@ -111,25 +124,11 @@ core-icon-button:focus{
 }
 
 #myGroupsContainer{
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 }
 .cardholder {
   display: inline-block;
   position: relative;
-}
-
-.overflowMenu {
-  z-index: 100;
-  position: absolute;
-  margin-right: 10px;
-  margin-top: -10px;
-  border: 1px solid grey;
-  right: 0;
-  top: 100%;
-}
-
-.overflowMenu a {
-  cursor: pointer;
 }
 
 #addGroupCardButton {

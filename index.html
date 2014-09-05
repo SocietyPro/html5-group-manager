@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/angular-material.css">
 
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/sopro-material-styles/sopro-material.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
   </head>
   <body unresolved ng-app="app" ng-controller="appCtrl" tabindex="-1">
@@ -53,7 +54,7 @@
             </div>
           </div>
         </material-toolbar>
-        <div class="content-padding" layout="vertical">
+        <div class="content-padding" layout="vertical" flex>
 
           <!-- Quick Add Box -->
           <div id="quickAddBox">
@@ -79,33 +80,43 @@
           <material-content flex>
             <div id= "myGroupsContainer" ng-show="listContains === 'myGroups'">
               <!-- material-card for groups -->  
-              <div class="cardholder" ng-repeat="group in myGroups">
-                <material-card layout="vertical">
-                  
-                  <div flex ng-click="dialog($event, group)">
+              <div class="cardholder" 
+              ng-repeat="group in myGroups"
+              ng-mouseleave="group.overflow = false;"
+              >
+                <material-card 
+                class="groupCard" 
+                layout="vertical"
+                ng-click="dialog($event, group)">
+                  <div flex>
                     <h3>{{group.name}}</h3>
-                    <div class="lightDetails">
-                      {{group.groupType}}
-                      <div class="groupCount">
-                        <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"> 
-                        {{group.members.length}}
-                      </div>
-                      <div class="clearBoth"></div>
+                    <div class="lightDetails" layout="horizontal">
+                      <span flex> {{group.groupType}} </span>
+                      <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"> 
+                      <span class="groupMemberLength"> {{group.members.length}} </span>
                     </div>
                   </div>
                   
-                  <div class="cardMenuBar">
-                    <material-button class="overflowMenuButton material-button-icon" ng-click="overflowToggle(group)">
-                      <img class="overflowMenuIcon" ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
-
+                <div class="cardMenuBar" 
+                  layout="horizontal" 
+                  layout-align="end center">
+                    <material-button 
+                    class="overflowMenuButton material-button-icon" 
+                    ng-click="overflowToggle(group); $event.stopPropagation()"
+                    layout="horizontal"
+                    layout-align="center center" 
+                    >
+                      <img 
+                      class="overflowMenuIcon"
+                      ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
                     </material-button>
                   </div>
 
                 </material-card>
-                <div class="overflowMenu animate-show" ng-show="group.overflow">
-                  <a ng-click="duplicateGroup(group)">Duplicate Group</a><br />
-                  <a ng-click="deleteGroup(group)">Delete Group</a>
-                </div>
+                <material-card class="overflowMenu animate-show" ng-show="group.overflow">
+                  <a block ng-click="duplicateGroup(group)">Duplicate Group</a>
+                  <a block ng-click="deleteGroup(group)">Delete Group</a>
+                </material-card>
               </div>
             </div>
           </material-content>
