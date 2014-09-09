@@ -11,6 +11,8 @@ if(Cambrian.JAPI !== undefined && !Cambrian.isMockCambrian){
 
 //appModule = angular.module("app", ['eee-c.angularBindPolymer'])
 
+var GROUP_TYPES = ['broadcast', 'open'];
+
 appModule = angular.module("app", ['ngMaterial'])
 .factory("menu", ['$rootScope', function ($rootScope) {
   var self;
@@ -37,7 +39,7 @@ appModule = angular.module("app", ['ngMaterial'])
   $scope.myPeers = japi.me.peers;
   $scope.myGroups = japi.me.groups;
   $scope.myPeerLists = japi.me.peerLists;
-  $scope.groupTypes = ['Broadcast List'];
+  $scope.groupTypes = GROUP_TYPES;
   $scope.newGroupType = $scope.groupTypes[0];
 
   for (var i=0; i < $scope.myGroups.length; i++) {
@@ -69,14 +71,21 @@ appModule = angular.module("app", ['ngMaterial'])
   };
 
   $scope.newGroup = function () {
-    var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    //var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    var groupToAdd = japi.groups.build('open');
+    groupToAdd.name = $scope.newGroupTitle;
+    groupToAdd.type = $scope.newGroupType;
+    groupToAdd.members = [];
     $scope.myGroups.push(groupToAdd);
     $scope.newGroupTitle = "";
     $scope.quickAddForm.$setPristine();
+    $scope.dialog(null, groupToAdd);
   };
 
   $scope.duplicateGroup = function (group) {
-    var buildGroup = angular.copy(group);
+    //var buildGroup = angular.copy(group);
+    var buildGroup = japi.groups.build(group);
+    console.log(buildGroup);
     buildGroup.name = buildGroup.name + " (Duplicate)";
     buildGroup.overflow = false;
     $scope.myGroups.push(buildGroup);
@@ -92,6 +101,7 @@ appModule = angular.module("app", ['ngMaterial'])
       $scope.myGroups.splice(index, 1);  
     }
     group.overflow = false;
+    group.destroy();
   };
 
   $scope.dialog = function (e, group) {
@@ -101,6 +111,10 @@ appModule = angular.module("app", ['ngMaterial'])
       controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
         $scope.group = group;
         $scope.japi = japi;
+        $scope.newGroupType = group.type;
+        console.log('Setting dialog $scope.newGroupType to ',group.type)
+        $scope.groupTypes = GROUP_TYPES;
+        $scope.newGroupTitle = group.name;
 
         // Filter to display only nonMembers:
         $scope.nonMembers = function(peer){
@@ -116,10 +130,9 @@ appModule = angular.module("app", ['ngMaterial'])
         };
 
         $scope.save = function (group) {
-          $scope.group.save();
+          group.save()
           $hideDialog();
         };
-
       }]
     });
   };

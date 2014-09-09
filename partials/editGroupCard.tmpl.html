@@ -1,3 +1,88 @@
+<!-- STYLES AT END OF TEMPLATE -->
+<material-dialog>
+  <div layout="vertical" class="dialog-content">
+    <div layout="horizontal" id="groupDialogCaption">
+      <h3 flex>Group Management</h3>
+      <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
+      <span>{{group.members.length}}
+    </div>
+
+    <material-input-group>
+      <label 
+      for="groupName"
+      >Group Name</label>
+
+      <material-input 
+      name="groupName" 
+      id="groupName" 
+      type="text" 
+      size="45" 
+      ng-model="group.name"
+      ></material-input>
+    </material-input-group>
+
+    <label for="groupTypeContainer">Group Type</label>
+    
+    <div id="groupTypeContainer">
+      <div class="custom-dropdown small">
+        <select 
+        ng-model="newGroupType" 
+        ng-options="groupType for groupType in groupTypes"></select>
+      </div>
+    </div>
+
+    <div flex layout="horizontal">
+      <section flex="50" class="members" layout="vertical">
+        <span block class="sectionTitle">Group Members</span>
+        <material-list flex>
+          <material-item 
+          ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
+          class="membersAnimate"
+          layout="horizontal"
+          >
+            <span flex>{{member.name || member.id }}</span>
+            <img 
+            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
+            ng-click="group.removePeer(member)"
+            >
+          </material-item>
+        </material-list>
+        <!--
+        <material-button block class="material-button-raised">Remove</material-button>
+        -->
+      </section>
+      <section flex="50" class="peers" layout="vertical">
+        <span block class="sectionTitle">Other Peers</span>
+        <material-list flex>
+          <material-item 
+          ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
+          class="peersAnimate"
+          layout="horizontal"
+          >
+            <img 
+            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
+            ng-click="group.addPeer(peer)"
+            >
+            <span flex>{{peer.name || peer.id }}</span>
+          </material-item>
+        </material-list>
+        <!--
+        <material-button block class="material-button-raised">Add to Group</material-button>
+        -->
+      </section>
+    </div>
+  </div>
+  <footer class="dialog-actions" layout="horizontal" layout-end="end">
+    <material-button ng-click="close()">
+      Close
+    </material-button>
+    <material-button ng-click="save(group)" class="material-button-colored">
+      Save
+    </material-button>
+  </footer>
+</material-dialog>
+
+
 <style>
 .dialog-content{
   /* Force the dialog-content div to not scroll. We only want the actual lists to scroll. */
@@ -5,21 +90,53 @@
   overflow-x: hidden !important;
   overflow-y: hidden !important;
 }
-.sectionTitle{
+.dialog-content .sectionTitle{
   text-transform: uppercase;
   font-weight: lighter;
   text-align: center;
   font-size: 24px;
   line-height: 24px;
-  height: 24px;
+  color: white;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px 0 0 0;
 }
+
+.members .sectionTitle{
+  background-color: rgb(63,81,181); /* #3f51b5 */
+}
+section.members {
+  background-color: rgba(63,81,181, 0.3); /* #3f51b5 */
+}
+
+.peers .sectionTitle{
+  background-color: rgb(255,87,34); /* #ff5722 */
+}
+section.peers {
+  background-color: rgba(255,87,34, 0.3); /* #ff5722 */
+}
+
 .dialog-content section{
-  margin-top: 8px;
   overflow: hidden;
+  margin-top: 8px;
 }
-section material-list{
+.dialog-content section material-list{
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.dialog-content material-list material-item {
+  min-height: 56px;
+  line-height: 24px;
+  padding: 0px 8px;
+  font-weight: bold;
+}
+
+.dialog-content section material-button.material-button-raised {
+  min-height: 40px;
+  line-height: 24px;
+  background-color: white;
+  margin: 4px 24px 4px 24px;
 }
 /* Animations for moving peers around */
 /* Left list - Group members */
@@ -126,54 +243,16 @@ section material-list{
 }
 .peersAnimate.ng-move.ng-move-active{
 }
+#groupDialogCaption h3{
+  margin: 0;
+  padding: 0;
+}
+#groupDialogCaption img{
+  width: 18px;
+  height: 18px;
+  margin-top: 2px; // align with 24px line height
+}
+#groupDialogCaption span{
+  margin-left: 8px;
+}
 </style>
-<material-dialog>
-  <div layout="vertical" class="dialog-content">
-    <material-input 
-    block 
-    ng-model="group.name">
-    </material-input>
-    <div flex layout="horizontal" class="dialog-content">
-      <section flex="50" class="members" layout="vertical">
-        <span block class="sectionTitle">Group Members</span>
-        <material-list>
-          <material-item 
-          ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
-          class="membersAnimate"
-          layout="horizontal"
-          >
-            <span flex>{{member.name || member.id }}</span>
-            <img 
-            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
-            ng-click="group.removePeer(member)"
-            >
-          </material-item>
-        </material-list>
-      </section>
-      <section flex="50" class="peers" layout="vertical">
-        <span block class="sectionTitle">Other Peers</span>
-        <material-list>
-          <material-item 
-          ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
-          class="peersAnimate"
-          layout="horizontal"
-          >
-            <img 
-            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
-            ng-click="group.addPeer(peer)"
-            >
-            <span flex>{{peer.name || peer.id }}</span>
-          </material-item>
-        </material-list>
-      </section>
-    </div>    
-  </div>
-  <div class="dialog-actions" layout="horizontal" layout-end="end">
-    <material-button ng-click="close()">
-      Close
-    </material-button>
-    <material-button ng-click="save(group)" class="material-button-colored">
-      Save
-    </material-button>
-  </div>
-</material-dialog>

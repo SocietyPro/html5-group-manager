@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html tabindex="-1">
   <head>  
+    <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
+    <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+
     <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="bower_components/angular/angular.js" type="text/javascript"></script>
     <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
     <script src="bower_components/sopro-material/js/angular-material.js" type="text/javascript"></script>
-    <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
-    <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+    <!-- 
+    <script src="bower_components/material-titlebar/titlebar.js" type="text/javascript"></script>
+    -->
+
+    <!-- Keep app.js at the end -->
     <script src="js/app.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/plugins/font-awesome-4.1.0/css/font-awesome.css">
@@ -56,22 +62,44 @@
         </material-toolbar>
         <div class="content-padding" layout="vertical" flex>
 
-          <!-- Quick Add Box -->
           <div id="quickAddBox">
             <form name="quickAddForm" style="padding-left:20px;">
+            <!--
               <material-input-group>
                 <label for="quickAddTitle">Add a group...</label>
-                <material-input name="quickAddTitle" id="quickAddTitle" type="text" size="45" ng-model="newGroupTitle" flex>
               </material-input-group>
+            -->
+              <material-input 
+              name="quickAddTitle" 
+              id="quickAddTitle" 
+              type="text" 
+              size="45" 
+              ng-model="newGroupTitle"
+              placeholder="Add a group..."
+              flex></material-input>
               <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
-                <select ng-model="newGroupType" ng-options="groupType for groupType in groupTypes"></select>
+                <div class="custom-dropdown small">
+                  <select 
+                  ng-model="newGroupType" 
+                  ng-options="groupType for groupType in groupTypes"></select>
+                </div>
                 <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
                   SAVE
                 </material-button>
               </div>
             </form>
           </div>
-          <!-- end Quick Add Box -->
+          <!-- Quick Add Box original 
+          <sopro-titlebar>
+              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
+              <select ng-model="newGroupType" ng-options="groupType for groupType in groupTypes"></select>
+              <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
+                SAVE
+              </material-button>
+            </div>
+          </sopro-titlebar>
+          end Quick Add Box -->
+
           <!-- 
           <material-content 
           ng-class="{'groupListsContainer':true, 'quiltView':listView === 'quilt', 'streamView':listView === 'stream'}" 
@@ -91,7 +119,7 @@
                   <div flex>
                     <h3>{{group.name}}</h3>
                     <div class="lightDetails" layout="horizontal">
-                      <span flex> {{group.groupType}} </span>
+                      <span flex> {{group.type}} </span>
                       <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"> 
                       <span class="groupMemberLength"> {{group.members.length}} </span>
                     </div>
@@ -147,7 +175,7 @@
                   </div>
                   <div class="material-tile-content">
                     <h2>{{group.name}}</h2>
-                    {{group.groupType}}
+                    {{group.type}}
                     <material-list>
                       <div  ng-show="group.isActive === true" class="animate-show">
                         
