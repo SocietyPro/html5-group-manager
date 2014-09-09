@@ -28,7 +28,7 @@
 
       <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left">
         <material-toolbar class="material-theme-light">
-          <h1 class="material-toolbar-tools">Society Pro</h1>
+          <h1 id="navMenuTitle" class="material-toolbar-tools">Society Pro</h1>
           <span flex></span>
         </material-toolbar>
         <material-content flex>
@@ -48,13 +48,13 @@
               <div class="menu-icon" ng-click="toggleMenu()">
                 <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_48dp.png">
               </div>
-              <h2>Groups & Governance</h2>
+              <h2 id="toolTitle">Groups & Governance</h2>
             </div>
             <div id="viewButtons" layout="horizontal">
-              <material-button class="material-button-icon" ng-click="streamView()">
+              <material-button id="streamButton" class="material-button-icon" ng-click="streamView()">
                 <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_48dp.png">
               </material-button>
-              <material-button class="material-button-icon" ng-click="quiltView()">
+              <material-button id="quiltButton" class="material-button-icon" ng-click="quiltView()">
                 <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_48dp.png">
               </material-button>
             </div>
@@ -105,8 +105,8 @@
           ng-class="{'groupListsContainer':true, 'quiltView':listView === 'quilt', 'streamView':listView === 'stream'}" 
           scroll-y flex>
           -->
-          <material-content flex>
-            <div id= "myGroupsContainer" ng-show="listContains === 'myGroups'">
+          <material-content id="contentArea" flex>
+            <div id= "myGroupsContainer" ng-if="listContains === 'myGroups'">
               <!-- material-card for groups -->  
               <div class="cardholder" 
               ng-repeat="group in myGroups"
