@@ -10,7 +10,8 @@ describe("groups and governance titlebar", function () {
   elements = new Elements();
   
   it("is displayed", function () {
-
+    titlebar = element(by.id('quickAddBox'));
+    expect(titlebar.isDisplayed()).toBe(true);
   });
 
   it("has a visible title input", function () {

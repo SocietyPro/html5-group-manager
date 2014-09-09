@@ -10,8 +10,8 @@ describe("html5 group card interface", function () {
   elements = new Elements();
   
   it("has an myGroupsContainer", function () {
-    var applicationContainer = elements.applicationContainer;
-    expect(applicationContainer.isDisplayed()).toBeTruthy();
+    var myGroupsContainer = elements.myGroupsContainer;
+    expect(myGroupsContainer.isDisplayed()).toBeTruthy();
   });
 
   it("displays a newly created group as a new card", function(){
