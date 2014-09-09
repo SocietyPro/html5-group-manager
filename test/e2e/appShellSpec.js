@@ -20,7 +20,7 @@ describe("html5 application shell", function () {
   describe('left nav', function(){
     it("has one side nav", function () {
       expect(elements.leftNavs.count()).toBe(1);
-      expect(elements.leftNavs.get(1).isDisplayed()).toBeFalsy();
+      expect(elements.leftNavs.get(0).isDisplayed()).toBeFalsy();
     });
 
     it("starts closed", function(){
@@ -28,11 +28,6 @@ describe("html5 application shell", function () {
     });
 
     it("opens when hamburger is clicked", function(){
-      var sidenav = 
-          if (waitForElement({id: 'toolTitle'}, 'SocietyPro Groups and Governance', 25)) {
-        expect(toolTitle.isDisplayed()).toBeTruthy();
-        expect(toolTitle.getText()).toEqual('SocietyPro Groups and Governance');
-      }
     });
 
     it("displays a scrim when open", function(){
@@ -42,7 +37,7 @@ describe("html5 application shell", function () {
     it("closes when scrim is clicked", function(){
       
     });
-  })
+  });
 
   describe('header toolbar', function(){
     it('is displayed', function(){
@@ -50,11 +45,6 @@ describe("html5 application shell", function () {
     });
 
     it("displays a title", function () {
-      var toolTitle = element(by.id('toolTitle'));
-      if (waitForElement({id: 'toolTitle'}, 'SocietyPro Groups and Governance', 25)) {
-        expect(toolTitle.isDisplayed()).toBeTruthy();
-        expect(toolTitle.getText()).toEqual('SocietyPro Groups and Governance');
-      }
     });
 
     it("has a hamburger button", function(){
@@ -66,7 +56,7 @@ describe("html5 application shell", function () {
     });
   });
 
-  describe('content area')
+  describe('content area', function(){
     it('is displayed', function(){
 
     });
