@@ -1,74 +1,78 @@
-
-//var retry = require('webdriverjs-retry');
-
 var Elements = function () {
-  //this.applicationContainer = element(by.id('applicationContainer'));
+  this.applicationContainer = element(by.id('applicationContainer'));
   this.toolTitle = element(by.id('toolTitle'));
+  this.leftNavs = element.all(by.tagName('material-sidenav'))
 };
 
 var elements;
 var toolTitle;
 
-var waitForElement = function (elm, txt, attempts) {
-  if (attempts == null) {
-    attempts = 3;
-  };
-
-  return browser.driver.findElement(elm).then(function (found) {
-    browser.manage().timeouts().implicitlyWait(300);
-    return browser.wait(function () {
-      return found.isDisplayed().then(function (visible) {
-        if (visible) {
-          return found(getText()).then(function (gotText) {
-            return gotText === txt;
-          });
-        } else {
-          browser.sleep(300);
-          return false;
-        };
-      }, function (err) {
-        if (attempts > 0) {
-          return waitForElement(elm, txt, attempts -1 );
-        } else {
-          throw err;
-        };
-      });
-    }, 5000, 'Expectation error: waiting for element to getText().');
-  }, function (err) {
-    if (attempts > 0) {
-      return waitForElement(elm, txt, attempts -1);
-    } else {
-      throw err;
-    };
-  });
-};
-
 describe("html5 application shell", function () {
 
   browser.get('/');
-  var POLYMER_READY = false;
+  elements = new Elements();
   
-  beforeEach(function (done) {
-    browser.wait(function () {
-      POLYMER_READY = browser.executeScript(function () {
-        return soProTestsReady == true;
-      });
-      return POLYMER_READY
+  it("has an application container", function () {
+    var applicationContainer = elements.applicationContainer;
+    expect(applicationContainer.isDisplayed()).toBeTruthy();
+  });
+
+  describe('left nav', function(){
+    it("has one side nav", function () {
+      expect(elements.leftNavs.count()).toBe(1);
+      expect(elements.leftNavs.get(1).isDisplayed()).toBeFalsy();
+    });
+
+    it("starts closed", function(){
+      
+    });
+
+    it("opens when hamburger is clicked", function(){
+      var sidenav = 
+          if (waitForElement({id: 'toolTitle'}, 'SocietyPro Groups and Governance', 25)) {
+        expect(toolTitle.isDisplayed()).toBeTruthy();
+        expect(toolTitle.getText()).toEqual('SocietyPro Groups and Governance');
+      }
+    });
+
+    it("displays a scrim when open", function(){
+
+    })
+
+    it("closes when scrim is clicked", function(){
+      
+    });
+  })
+
+  describe('header toolbar', function(){
+    it('is displayed', function(){
+
+    });
+
+    it("displays a title", function () {
+      var toolTitle = element(by.id('toolTitle'));
+      if (waitForElement({id: 'toolTitle'}, 'SocietyPro Groups and Governance', 25)) {
+        expect(toolTitle.isDisplayed()).toBeTruthy();
+        expect(toolTitle.getText()).toEqual('SocietyPro Groups and Governance');
+      }
+    });
+
+    it("has a hamburger button", function(){
+      
+    });
+
+    it("has layout buttons", function(){
+      
     });
   });
 
-/*  it("has an application container", function () {
-    var applicationContainer = element(by.id('applicationContainer'));
-    expect(applicationContainer.isDisplayed()).toBeTruthy();
-  });
-*/
+  describe('content area')
+    it('is displayed', function(){
 
-  it("has a title bar", function () {
-    var toolTitle = element(by.id('toolTitle'));
-    if (waitForElement({id: 'toolTitle'}, 'SocietyPro Groups and Governance', 25)) {
-      expect(toolTitle.isDisplayed()).toBeTruthy();
-      expect(toolTitle.getText()).toEqual('SocietyPro Groups and Governance');
-    }
-  });
+    });
 
+    xit("fills the screen", function(){
+      
+    });
+  });
 });
