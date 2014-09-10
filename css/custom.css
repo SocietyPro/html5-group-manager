@@ -37,6 +37,10 @@ material-card.groupCard h3{
   padding: 0;
 }
 
+material-card.groupCard span.groupType{
+  text-transform:capitalize;
+}
+
 .cardMenuBar{
   visibility: hidden;
 }

@@ -206,16 +206,39 @@ describe("zoom and edit view", function () {
       element(by.css('material-dialog #groupName'))
       .sendKeys('EDIT');
 
-      element(by.css('material-dialog #groupName'))
+      // Open dropdown:
+      element(by.css('material-dialog #groupTypeContainer select'))
+      .click();
+
+      // Click the first option:
+      var option1 = element(by.css('material-dialog #groupTypeContainer select option:first-child'))
+
+      expect( option1.getText()).toEqual('Broadcast');
+      option1.click();
 
       var save = element(by.css('material-dialog footer material-button:last-child'));
       expect(save.getText()).toEqual('SAVE');
       save.click();
 
-      var lastCard = element(by.css('.cardholder:last-child h3'));
+      var lastCardTitle = element(by.css('.cardholder:last-child h3'));
+      var lastCardType = element(by.css('.cardholder:last-child .lightDetails span.groupType'));
 
-      expect(lastCard.getText()).toEqual('Protractor Test GroupEDIT');
+      expect(lastCardTitle.getText()).toEqual('Protractor Test GroupEDIT');
+      expect(lastCardType.getText()).toEqual('Broadcast');
     });
+
+    xit('adds a peer to the list when you click add', function(){
+
+    });
+
+    xit('removes a peer from the list when you click remove', function(){
+      
+    });
+
+    xit('saves when you click save', function(){
+
+    });
+
   });
 
 });
