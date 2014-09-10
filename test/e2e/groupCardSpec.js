@@ -14,69 +14,69 @@ describe("html5 group card interface", function () {
     expect(myGroupsContainer.isDisplayed()).toBeTruthy();
   });
 
-  it("displays a newly created group as a new card", function(){
+  xit("displays a newly created group as a new card", function(){
 
   });
 
   describe("one groupCard", function(){
     describe('structure', function(){
-      it('has a .cardholder container div', function(){
+      xit('has a .cardholder container div', function(){
 
       });
 
-      it('has a visible <material-card> representing the group', function(){
+      xit('has a visible <material-card> representing the group', function(){
 
       });
 
-      it('has a hidden <material-card> representing an overflow menu', function(){
+      xit('has a hidden <material-card> representing an overflow menu', function(){
 
       });
 
-      it('has delete and duplicate items in the .overflowMenu', function(){
+      xit('has delete and duplicate items in the .overflowMenu', function(){
         
       });
 
-      it('has a hidden .cardMenuBar', function(){
+      xit('has a hidden .cardMenuBar', function(){
 
       });
 
-      it('has a .overflowMenuButton in the .cardMenuBar', function(){
+      xit('has a .overflowMenuButton in the .cardMenuBar', function(){
 
       });
     });
 
     describe('contents', function(){
-      it('has a title', function(){
+      xit('has a title', function(){
 
       });
 
-      it('has an icon representing member count', function(){
+      xit('has an icon representing member count', function(){
 
       });
       
-      it('has a count of members', function(){
+      xit('has a count of members', function(){
 
       });
 
-      it('has the group type', function(){
+      xit('has the group type', function(){
 
       });
     });
 
     describe('interaction', function(){
-      it('displays the .cardMenuBar on mouseover', function(){
+      xit('displays the .cardMenuBar on mouseover', function(){
 
       });
 
-      it('shows the hidden .overflowMenu when the overflow button is clicked', function(){
+      xit('shows the hidden .overflowMenu when the overflow button is clicked', function(){
 
       });
 
-      it('hides the visible .overflowMenu when the overflow button is clicked again', function(){
+      xit('hides the visible .overflowMenu when the overflow button is clicked again', function(){
 
       });
 
-      it('brings up the group edit dialog when the rest of the card is clicked', function(){
+      xit('brings up the group edit dialog when the rest of the card is clicked', function(){
         
       });
     });
