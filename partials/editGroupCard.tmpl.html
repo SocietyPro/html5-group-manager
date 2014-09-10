@@ -72,7 +72,7 @@
       </section>
     </div>
   </div>
-  <footer class="dialog-actions" layout="horizontal" layout-end="end">
+  <footer class="dialog-actions" layout="horizontal" layout-end="end center">
     <material-button ng-click="close()">
       Close
     </material-button>
@@ -84,11 +84,18 @@
 
 
 <style>
+/* Some of these have !important because they are are overriding 
+angular's material style defaults */
+.material-dialog-container material-dialog{
+  min-width: 400px !important;
+  border-radius: 0px !important;
+}
 .dialog-content{
   /* Force the dialog-content div to not scroll. We only want the actual lists to scroll. */
   overflow: hidden !important;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
+  padding-bottom: 0px !important;
 }
 .dialog-content .sectionTitle{
   text-transform: uppercase;
@@ -117,15 +124,17 @@ section.peers {
 }
 
 .dialog-content section{
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: visible;
   margin-top: 8px;
 }
 .dialog-content section material-list{
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: visible;
 }
 
 .dialog-content material-list material-item {
+  overflow-x: hidden;
   min-height: 56px;
   line-height: 24px;
   padding: 0px 8px;
@@ -137,6 +146,14 @@ section.peers {
   line-height: 24px;
   background-color: white;
   margin: 4px 24px 4px 24px;
+}
+
+material-dialog footer {
+  min-height: 64px !important;
+}
+material-dialog footer material-button{
+  font-size: 1.6em;
+  margin-left: 32px;
 }
 /* Animations for moving peers around */
 /* Left list - Group members */
