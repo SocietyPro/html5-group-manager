@@ -21,7 +21,7 @@
     "test": "test"
   },
   "scripts": {
-    "postinstall": "node node_modules/bower/bin/bower install; node node_modules/protractor/bin/webdriver-manager update",
+    "postinstall": "node node_modules/bower/bin/bower install",
     "start": "node node_modules/http-server/bin/http-server -a localhost -p 8000",
     "test": "node node_modules/protractor/bin/protractor test/protractor-conf.js",
     "karma": "karma start test/karma.conf.js",
