@@ -77,7 +77,11 @@ describe("html5 group card interface", function () {
       });
 
       xit('brings up the group edit dialog when the rest of the card is clicked', function(){
-        
+        element(by.css('.cardholder:last-child')).click();
+        expect(
+          element(by.tagName('material-dialog'))
+          .isPresent()
+        ).toBe(true);
       });
     });
   });

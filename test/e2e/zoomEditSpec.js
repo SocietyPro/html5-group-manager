@@ -149,11 +149,67 @@ describe("zoom and edit view", function () {
   });
 
   describe('interaction', function(){
-    it("pops up a modal dialog", function () {
-      openDialog();
-      expect(element(by.tagName('material-dialog')).isDisplayed()).toBe(true);
-      closeDialog();
-      expect(element(by.tagName('material-dialog')).isPresent()).toBe(false);
+    beforeEach(function(){
+      browser.get('/');
+      ensureTestGroup();
+      element(by.css('.cardholder:last-child')).click();
+      expect(
+        element(by.tagName('material-dialog'))
+        .isDisplayed()
+      ).toBe(true);
+    });
+
+    it('closes when you click the scrim', function(){
+      browser.actions()
+      .mouseMove(
+      //.moveToElement(
+        element(by.css('.material-dialog-container'))
+        , -20, -20  // pixel offset from top left
+      )
+      .click()
+      .perform();
+
+     // browser.moveToElement(element(by.css('.material-dialog-container'))
+
+      /*
+         browser.actions().
+         mouseMove(elements.firstCard).
+         perform();
+      */
+      //element(by.css('body'))
+      //.click();
+
+      expect(
+        element.all(by.css('material-dialog'))
+        .count()
+      ).toBe(0);
+    });
+
+    it('closes when you click the close button', function(){
+      var close = element(by.css('material-dialog footer material-button:first-child'));
+      expect(close.getText()).toEqual('CLOSE');
+      close.click();
+      
+      expect(
+        element.all(by.css('material-dialog'))
+        .count()
+      ).toBe(0);
+    });
+
+    it('closes when you click the save button', function(){
+      var save = element(by.css('material-dialog footer material-button:last-child'));
+      expect(save.getText()).toEqual('SAVE');
+      save.click();
+      
+      expect(
+        element.all(by.css('material-dialog'))
+        .count()
+      ).toBe(0);
+      
+    });
+
+    it('reflects name and type changes on the card', function(){
+
     });
   });
 

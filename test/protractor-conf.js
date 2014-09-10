@@ -2,8 +2,8 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    'e2e/*.js',
-    //'e2e/zoomEditSpec.js',
+    //'e2e/*.js',
+    'e2e/zoomEditSpec.js',
     'reporterHack.js'
   ],
 
