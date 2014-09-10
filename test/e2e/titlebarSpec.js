@@ -1,32 +1,46 @@
 var Elements = function () {
   this.titlebar = element(by.id('quickAddBox'));
+  this.textbox=element(by.id('quickAddTitle'));
+  this.options=element.all(by.css('#quickAddBox select option'));
 };
+// get the options of a selector
 
 var elements;
+
 
 describe("groups and governance titlebar", function () {
 
   browser.get('/');
   elements = new Elements();
-  
-  it("is displayed", function () {
-    titlebar = element(by.id('quickAddBox'));
+  var titlebar=elements.titlebar;
+  var textbox=elements.textbox;
+  var selector=element(by.css('#quickAddBox select '));
+  var options = element.all(by.css('#quickAddBox select option'));
+
+    it("is displayed", function () {
     expect(titlebar.isDisplayed()).toBe(true);
   });
 
-  xit("has a visible title input", function () {
-  });
-  
-  xit("has placeholder text 'Add a group'", function () {
-    
+  it("has a visible title input", function () {
+    expect(textbox.getText()).toEqual("");
   });
 
-  xit("has an invisible group type selector", function () {
+  it("has an invisible group type selector", function () {
+    expect(selector.isDisplayed()).toBe(false);
   });
 
-  xit("has an invisible group type selector", function () {
-  });
-  
+   it("selector has the 'Broadcast' and 'Option' options", function () {
+    //simulate some text input
+      textbox.sendKeys("test");
+       expect(
+           options.get(0).getText()
+       ).toEqual('Broadcast');
+       expect(
+           options.get(1).getText()
+       ).toEqual('Open');
+
+   });
+
   xit("shows all elements once the form is dirtied", function () {
     
   });
@@ -42,4 +56,10 @@ describe("groups and governance titlebar", function () {
   xit("pops up the group edit window after clicking save", function () {
     
   });
+  //pending test because this placeholder is an atribute
+  xit("has placeholder text 'Add a group'", function () {
+      expect(element(by.binding('notPresent')).isPresent()).toBe(false);
+    });
+
+
 });
