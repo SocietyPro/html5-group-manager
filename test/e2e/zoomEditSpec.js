@@ -14,7 +14,12 @@ describe("zoom and edit view", function () {
     if(testTitle.getText() === 'Protractor Test Group'){
       return true;
     };
-    element(by.id('quickAddTitle')).sendKeys('Protractor Test Group', protractor.Key.ENTER);  
+    element(by.id('quickAddTitle'))
+    .sendKeys('Protractor Test Group');  
+
+    element(by.css('#quickAddBox #quickAddButton'))
+    .click();
+
     closeDialog();
     return true;
   }
@@ -162,22 +167,11 @@ describe("zoom and edit view", function () {
     it('closes when you click the scrim', function(){
       browser.actions()
       .mouseMove(
-      //.moveToElement(
         element(by.css('.material-dialog-container'))
         , -20, -20  // pixel offset from top left
       )
       .click()
       .perform();
-
-     // browser.moveToElement(element(by.css('.material-dialog-container'))
-
-      /*
-         browser.actions().
-         mouseMove(elements.firstCard).
-         perform();
-      */
-      //element(by.css('body'))
-      //.click();
 
       expect(
         element.all(by.css('material-dialog'))
@@ -209,7 +203,18 @@ describe("zoom and edit view", function () {
     });
 
     it('reflects name and type changes on the card', function(){
+      element(by.css('material-dialog #groupName'))
+      .sendKeys('EDIT');
 
+      element(by.css('material-dialog #groupName'))
+
+      var save = element(by.css('material-dialog footer material-button:last-child'));
+      expect(save.getText()).toEqual('SAVE');
+      save.click();
+
+      var lastCard = element(by.css('.cardholder:last-child h3'));
+
+      expect(lastCard.getText()).toEqual('Protractor Test GroupEDIT');
     });
   });
 
