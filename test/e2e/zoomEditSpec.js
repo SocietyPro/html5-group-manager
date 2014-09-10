@@ -6,34 +6,47 @@ var elements;
 
 describe("zoom and edit view", function () {
 
-  function ensureTestGroup(){
+  function createTestGroup(){
     //TODO: Figure out how to make this not reliant on old-to-latest sorting
+    /*
     var testGroup = element(by.css('.cardholder:last-child'));
     //var lastCard = element.all(by.css('.cardholder')).last();
     var testTitle = testGroup.element(by.tagName('h3'));
     if(testTitle.getText() === 'Protractor Test Group'){
+
       return true;
     };
+    */
     element(by.id('quickAddTitle'))
     .sendKeys('Protractor Test Group');  
 
     element(by.css('#quickAddBox #quickAddButton'))
     .click();
 
-    closeDialog();
     return true;
   }
 
   function openDialog(){
+    //closeDialog();
     // Make sure there's a test group and click it:
-    ensureTestGroup();
-    element(by.css('.cardholder:last-child')).click();
+    createTestGroup();
+    //element(by.css('.cardholder:last-child')).click();
   };
 
   function closeDialog(){
     // Click the close button:
     element(by.css('material-dialog:first-child footer material-button:first-child'))
-    .click();
+    .click()
+    /*
+    if( 
+      browser.isElementPresent(
+        by.css('material-dialog:first-child footer material-button:first-child')
+      )
+    ){
+    } else {
+      return true;
+    }
+    */
   };
 
   /* This seems to break promises if you want to chain .all off it to get child elements. 
@@ -154,10 +167,12 @@ describe("zoom and edit view", function () {
   });
 
   describe('interaction', function(){
+    // Refresh the page before every interaction test, 
+    // then add a test group and make sure the dialog is open
     beforeEach(function(){
       browser.get('/');
-      ensureTestGroup();
-      element(by.css('.cardholder:last-child')).click();
+      createTestGroup();
+      //element(by.css('.cardholder:last-child')).click();
       expect(
         element(by.tagName('material-dialog'))
         .isDisplayed()
@@ -227,12 +242,102 @@ describe("zoom and edit view", function () {
       expect(lastCardType.getText()).toEqual('Broadcast');
     });
 
-    xit('adds a peer to the list when you click add', function(){
+    it('has the expected mock peers', function(){
+      var peers = element.all(by.css('material-dialog section.peers material-item'));
+      expect(peers.count()).toBe(3);
 
+      var firstPeerName = element(
+        by.css('material-dialog section.peers material-item:first-child span')
+      );
+      expect(firstPeerName.getText()).toEqual('hiro')
     });
 
-    xit('removes a peer from the list when you click remove', function(){
-      
+    describe('adding a peer', function(){
+      // Add the page before each test:
+      beforeEach(function(){
+        var firstPeerLeftArrow = element(
+          by.css('material-dialog section.peers material-item:first-child img')
+        );
+        expect(firstPeerLeftArrow.isDisplayed()).toBe(true);
+
+        // Move the first peer to the members pane:
+        firstPeerLeftArrow.click();
+      });
+
+      it('adds the peer to Members', function(){
+        var members = element.all(by.css('material-dialog section.members material-item'));
+        expect(members.count()).toBe(1);
+
+        var firstMemberName = element(
+          by.css('material-dialog section.members material-item:first-child span')
+        );
+        expect(firstMemberName.getText()).toEqual('hiro')
+
+      }); 
+
+      it('hides the peer from Peers', function(){
+        // Check that the member is gone from the member list:
+        var peers = element.all(by.css('material-dialog section.peers material-item'));
+        expect(peers.count()).toBe(2);
+
+        var firstPeerName = element(
+          by.css('material-dialog section.peers material-item:first-child span')
+        );
+        expect(firstPeerName.getText()).toEqual('plato')
+      });
+
+      it('updates the member count', function(){
+        expect(
+          element(by.css('material-dialog #groupDialogCaption span'))
+          .getText()
+        ).toEqual('1');
+      });
+    });
+
+    describe('removing a peer', function(){
+      // Add the peer and then remove it before each test:
+      beforeEach(function(){
+        var firstPeerLeftArrow = element(
+          by.css('material-dialog section.peers material-item:first-child img')
+        );
+        expect(firstPeerLeftArrow.isDisplayed()).toBe(true);
+
+        // Move the first peer to the members pane:
+        firstPeerLeftArrow.click();
+
+        // Move the member back to the peers pane:
+        var firstMemberRightArrow = element(
+          by.css('material-dialog section.members material-item:first-child img')
+        );
+        expect(firstMemberRightArrow.isDisplayed()).toBe(true);
+        firstMemberRightArrow.click();
+
+      });
+
+      it('adds the peer to Peers', function(){
+        // Check that the member is added to the peer list:
+        var peers = element.all(by.css('material-dialog section.peers material-item'));
+        expect(peers.count()).toBe(3);
+
+        var firstPeerName = element(
+          by.css('material-dialog section.peers material-item:first-child span')
+        );
+        expect(firstPeerName.getText()).toEqual('hiro')
+      }); 
+
+      it('hides the peer from Members', function(){
+        // Check that the peer is gone from the member list:
+        var members = element.all(by.css('material-dialog section.members material-item'));
+        expect(members.count()).toBe(0);
+      });
+
+      it('updates the member count', function(){
+        expect(
+          element(by.css('material-dialog #groupDialogCaption span'))
+          .getText()
+        ).toEqual('0');
+      });
+
     });
 
     xit('saves when you click save', function(){
