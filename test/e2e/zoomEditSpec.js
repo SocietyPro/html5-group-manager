@@ -6,6 +6,7 @@ var elements;
 
 describe("zoom and edit view", function () {
 
+  // Helper Functions
   function createTestGroup(){
     //TODO: Figure out how to make this not reliant on old-to-latest sorting
     /*
@@ -17,11 +18,21 @@ describe("zoom and edit view", function () {
       return true;
     };
     */
+    expect(
+      element(by.tagName('material-dialog'))
+      .isPresent()
+    ).toBe(false);
+
     element(by.id('quickAddTitle'))
     .sendKeys('Protractor Test Group');  
 
     element(by.css('#quickAddBox #quickAddButton'))
     .click();
+
+    expect(
+      element(by.tagName('material-dialog'))
+      .isPresent()
+    ).toBe(true);
 
     return true;
   }
@@ -35,7 +46,7 @@ describe("zoom and edit view", function () {
 
   function closeDialog(){
     // Click the close button:
-    element(by.css('material-dialog:first-child footer material-button:first-child'))
+    element(by.css('material-dialog footer material-button:first-child'))
     .click()
     /*
     if( 
@@ -51,19 +62,29 @@ describe("zoom and edit view", function () {
 
   /* This seems to break promises if you want to chain .all off it to get child elements. 
   Use css selectors instead, unless you need this element specifically */
+  /*
   var Dialog = function(){
     return element(by.tagName('material-dialog'));
   }
+    var dialog;
+      dialog = new Dialog();
+  */
 
   //
   // Begin Tests:
   //
-  browser.get('/');
-  elements = new Elements();
 
-  it('tests the helper functions', function(){
+  it('reloads the page', function(){
+    browser.get('/');
+    elements = new Elements();
+  });
+
+  it('tests opening a dialog', function(){
     openDialog();
     expect(element(by.tagName('material-dialog')).isDisplayed()).toBe(true);
+  });
+
+  it('tests closing a dialog', function(){
     closeDialog();
     expect(element(by.tagName('material-dialog')).isPresent()).toBe(false);
     /*
@@ -79,10 +100,9 @@ describe("zoom and edit view", function () {
   });
 
   describe('structure', function(){
-    var dialog;
     it('sets up by opening the dialog', function(){
       openDialog();
-      dialog = new Dialog();
+      expect(element(by.tagName('material-dialog')).isDisplayed()).toBe(true);
     })
 
     describe('content div', function(){
@@ -153,12 +173,6 @@ describe("zoom and edit view", function () {
         expect(footerButtons.get(0).getText()).toEqual('CLOSE');
         expect(footerButtons.get(1).getText()).toEqual('SAVE');
       });
-    });
-
-
-    xit('tears down by deleting the test group', function(done){
-      closeDialog();
-      destroyTestGroup();
     });
   });
 

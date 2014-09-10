@@ -142,13 +142,14 @@
 
                 </material-card>
                 <material-card class="overflowMenu animate-show" ng-show="group.overflow">
-                  <a block ng-click="duplicateGroup(group)">Duplicate Group</a>
-                  <a block ng-click="deleteGroup(group)">Delete Group</a>
+                  <a block class="overflowDuplicate"
+                  ng-click="duplicateGroup(group)">Duplicate Group</a>
+                  <a block class="overflowDelete"
+                  ng-click="deleteGroup(group)">Delete Group</a>
                 </material-card>
               </div>
             </div>
           </material-content>
-          <div class="clearBoth"></div>
         </div>
       </div>
 
