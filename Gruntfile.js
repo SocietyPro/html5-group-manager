@@ -19,7 +19,9 @@ module.exports = function(grunt) {
     clean:[ "node_modules", 
             "test", 
             ".git",
-            ".gitignore", 
+            ".gitignore",
+            ".gitmodules",
+            ".Gruntfile.js",
             "package.json", 
             "bower.json",
             // Remove all material-icons except these exceptions:
