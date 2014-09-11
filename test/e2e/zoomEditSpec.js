@@ -99,7 +99,7 @@ describe("zoom and edit view", function () {
 
   });
 
-  describe('structure', function(){
+  describe('layout', function(){
     it('sets up by opening the dialog', function(){
       openDialog();
       expect(element(by.tagName('material-dialog')).isDisplayed()).toBe(true);

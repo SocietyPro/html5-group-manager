@@ -52,7 +52,7 @@ describe("html5 group card interface", function () {
       setupTestCard();
     });
 
-    describe('structure', function(){
+    describe('layout', function(){
       it('has a .cardholder container div', function(){
         expect(
           cardholder.isDisplayed()
