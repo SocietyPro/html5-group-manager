@@ -79,11 +79,13 @@ module.exports = function(grunt) {
     },
     clean:{
       icons: { // Clean task 1
+        dot: true,
         src: ["material-icons/**/*"],
         filter: deletePathOK,  // see top - this skips folders with child files to exclude from deletion
       },
       others: { // Clean task 2. Nothing special here.
         src: [
+          "bower_components/jquery/src/**/*",
           "node_modules", 
           "test", 
           ".git",
