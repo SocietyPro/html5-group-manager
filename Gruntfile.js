@@ -89,7 +89,7 @@ module.exports = function(grunt) {
           ".git",
           ".gitignore",
           ".gitmodules",
-          ".Gruntfile.js",
+          "Gruntfile.js",
           "package.json", 
           "bower.json",
         ],
