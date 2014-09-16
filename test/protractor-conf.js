@@ -3,10 +3,10 @@ exports.config = {
 
   specs: [
 
-    'e2e/*.js',
+    //'e2e/*.js',
     //'e2e/groupCardSpec.js',
     //'e2e/zoomEditSpec.js',
-    //'e2e/titlebarSpec.js',
+    'e2e/titlebarSpec.js',
     'reporterHack.js'
   ],
 
