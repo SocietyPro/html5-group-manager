@@ -2,34 +2,49 @@
 <material-dialog>
   <div layout="vertical" class="dialog-content">
     <div layout="horizontal" id="groupDialogCaption">
-      <h3 flex>Group Management</h3>
+      <!-- <h3 flex>Group Management</h3> -->
+      <div id="groupTypeContainer" layout="vertical">
+        <label 
+        for="groupName"
+        >Group Name</label>
+
+        <div class="custom-dropdown small">
+          <select 
+          ng-model="newGroupType" 
+          ng-options="groupType for groupType in groupTypes"></select>
+        </div>
+      </div>
+      <div 
+      id="groupNameContainer" 
+      layout="vertical"
+      flex
+      >
+        <label 
+        for="groupName"
+        >Group Name</label>
+        <material-input 
+        name="groupName" 
+        id="groupName" 
+        type="text" 
+        size="45" 
+        ng-model="group.name"
+        ></material-input>
+      </div>
       <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
       <span>{{group.members.length}}
     </div>
 
+    <!--
     <material-input-group>
       <label 
       for="groupName"
       >Group Name</label>
 
-      <material-input 
-      name="groupName" 
-      id="groupName" 
-      type="text" 
-      size="45" 
-      ng-model="group.name"
-      ></material-input>
     </material-input-group>
 
     <label for="groupTypeContainer">Group Type</label>
+    -->
     
-    <div id="groupTypeContainer">
-      <div class="custom-dropdown small">
-        <select 
-        ng-model="newGroupType" 
-        ng-options="groupType for groupType in groupTypes"></select>
-      </div>
-    </div>
 
     <div flex layout="horizontal">
       <section flex="50" class="members" layout="vertical">
@@ -39,11 +54,11 @@
           ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
           class="membersAnimate"
           layout="horizontal"
+          ng-click="group.removePeer(member)"
           >
             <span flex>{{member.name || member.id }}</span>
             <img 
             src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
-            ng-click="group.removePeer(member)"
             >
           </material-item>
         </material-list>
@@ -58,10 +73,10 @@
           ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
           class="peersAnimate"
           layout="horizontal"
+          ng-click="group.addPeer(peer)"
           >
             <img 
             src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
-            ng-click="group.addPeer(peer)"
             >
             <span flex>{{peer.name || peer.id }}</span>
           </material-item>
@@ -73,9 +88,11 @@
     </div>
   </div>
   <footer class="dialog-actions" layout="horizontal" layout-end="end center">
+    <!--
     <material-button ng-click="close()">
       Close
     </material-button>
+    -->
     <material-button ng-click="save(group)" class="material-button-colored">
       Save
     </material-button>
@@ -87,15 +104,16 @@
 /* Some of these have !important because they are are overriding 
 angular's material style defaults */
 .material-dialog-container material-dialog{
-  min-width: 400px !important;
+  width: 500px !important;
   border-radius: 0px !important;
+  margin-top: 84px !important; /* Offset to exactly the same height as quick add bar */
 }
 .dialog-content{
   /* Force the dialog-content div to not scroll. We only want the actual lists to scroll. */
   overflow: hidden !important;
   overflow-x: hidden !important;
   overflow-y: hidden !important;
-  padding-bottom: 0px !important;
+  padding: 8px 8px 0px 8px !important;
 }
 .dialog-content .sectionTitle{
   text-transform: uppercase;

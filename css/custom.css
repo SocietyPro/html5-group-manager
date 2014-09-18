@@ -126,7 +126,7 @@ core-icon-button:focus{
   border: 1px solid lightgrey;
   display: block;
   position: relative;
-  max-width: 500px;
+  min-width: 500px;
   margin: auto;
   box-sizing: border-box;
   padding: 8px;
@@ -137,6 +137,7 @@ core-icon-button:focus{
   display: inline-block;
   border-bottom: none;
   font-size: 14px;
+  transition: width ease-in-out 0.3s;
 }
 
 #quickAddAdditional {
@@ -215,6 +216,7 @@ material-item {
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  margin-right: 16px;
 }
 
 .custom-dropdown select {
@@ -252,6 +254,7 @@ material-item {
   margin-top: -.5em;
 }
 
+/*
 .custom-dropdown::before {
   width: 2em;
   right: 0;
@@ -260,6 +263,7 @@ material-item {
   border-radius: 0 3px 3px 0;
   border-bottom: 2px solid #B1AFAF;
 }
+*/
 
 .custom-dropdown::before {
   background-color: transparent;

@@ -62,32 +62,55 @@
         <div class="content-padding" layout="vertical" flex>
 
           <div id="quickAddBox">
-            <form name="quickAddForm" style="padding-left:20px;">
+            <form 
+            name="quickAddForm" 
+            layout="vertical">
             <!--
               <material-input-group>
                 <label for="quickAddTitle">Add a group...</label>
               </material-input-group>
             -->
-              <material-input 
-              name="quickAddTitle" 
-              id="quickAddTitle" 
-              type="text" 
-              size="45" 
-              ng-model="newGroupTitle"
-              placeholder="Add a Group..."
-              flex></material-input>
-              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
-                <div class="custom-dropdown small">
+              <div 
+              class="quickAddInputs"
+              layout="horizontal">
+
+                <div 
+                class="custom-dropdown small"
+                ng-show="isEditingPhase1"
+                >
                   <select 
                   ng-model="newGroupType" 
-                  ng-options="groupType for groupType in groupTypes"></select>
+                  ng-options="groupType for groupType in groupTypes">
+                  </select>
                 </div>
-                <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
-                  SAVE
-                </material-button>
+                <material-input 
+                name="quickAddTitle" 
+                id="quickAddTitle" 
+                type="text" 
+                size="45" 
+                ng-model="newGroupTitle"
+                ng-focus="openEditorPhase1()"
+                placeholder="Add a Group..."
+                flex>
+                </material-input>
               </div>
+              <material-button 
+              id="quickAddButton" 
+              class="material-button-colored" 
+              ng-show="isEditingPhase1"
+              ng-click="openEditorPhase2()">
+                NEXT 
+              </material-button>
             </form>
           </div>
+              <!-- 
+              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
+              <div 
+              id="quickAddAdditional" 
+              layout="horizontal"
+              >
+              </div>
+              -->
           <!-- Quick Add Box original 
           <sopro-titlebar>
               <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
