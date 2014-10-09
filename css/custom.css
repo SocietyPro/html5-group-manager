@@ -93,9 +93,19 @@ core-icon-button:focus{
 }
 
 #viewButtons {
+  margin: 8px 18px 0px 18px;
+}
+
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
   height: 48px;
-  float: right;
-  margin: 0 18px;
+  width: 53px;
+}
+.viewButton.active {
+  background-color: rgba(0,0,0,0.1);
+}
+.viewButton.inactive {
+  opacity: 0.5;
 }
 
 .menu-icon {
@@ -131,6 +141,9 @@ core-icon-button:focus{
   box-sizing: border-box;
   padding: 8px;
   line-height: 24px;
+  background-color: rgba(255,255,255,0.9);
+  margin-top: 4px;
+  margin-bottom: 14px;
 }
 
 #quickAddTitle {
@@ -168,9 +181,21 @@ core-icon-button:focus{
 #myGroupsContainer{
   padding-bottom: 100px;
 }
+
 .cardholder {
   display: inline-block;
+  vertical-align: top;
   position: relative;
+}
+.quilt {
+  display: inline-block;
+}
+.stream {
+  width:100%;
+}
+.stream material-card {
+  width: 95%;
+  max-width: none;
 }
 
 #addGroupCardButton {
@@ -362,3 +387,44 @@ material-toolbar {
   .material-toolbar-tools material-button {
     font-size: 16px; }
 */
+material-toolbar {
+  min-height: 48px;
+  height: 48px;
+}
+.menu-icon {
+  top: 0;
+  margin-top: -14px;
+  margin-left: 18px;
+  margin-right: 9px;
+  cursor: pointer;
+}
+#toolTitle {
+  margin-bottom: 20px;
+  font-size: 15px;
+  margin-left: 0px;
+}
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
+  height: 26px;
+  width: 35px;
+  margin-top: 3px;
+}
+.viewButton:hover {
+  opacity: 1;
+}
+#streamButton:hover {
+  background: none;
+}
+#quiltButton:hover {
+  background: none;
+}
+.viewButton button img {
+  margin-top: -3px;
+  margin-left: -1px;
+}
+.appVersion p {
+  color: slategray;
+  background-color: white;
+  margin-bottom: 0px;
+  padding: 10px;
+}

@@ -40,7 +40,7 @@ appModule = angular.module("app", ['ngMaterial'])
   $scope.myGroups = japi.me.groups;
   $scope.myPeerLists = japi.me.peerLists;
   $scope.groupTypes = GROUP_TYPES;
-  $scope.newGroupType = $scope.groupTypes[0];
+  $scope.inputClick = false;
 
   for (var i=0; i < $scope.myGroups.length; i++) {
     $scope.myGroups[i].isActive = false;
@@ -51,6 +51,23 @@ appModule = angular.module("app", ['ngMaterial'])
     $scope.myGroups.isActive[i] = false;
   };
   */
+
+  $(document).mouseup(function (e) {
+    var container = $("#quickAddBox");
+    if (!container.is(e.target) // if the target of the click isn't the container...
+        && container.has(e.target).length === 0) // ... nor a descendant of the container
+    {
+      var exists = ($('#quickAddBox').length === 1)
+      if (exists) {
+        $scope.$apply(function() {
+          $scope.inputClick = false;
+          $scope.newGroupType = "";
+          $scope.newGroupTitle = "";
+          $scope.quickAddForm.$setPristine();
+        });       
+      }
+    }
+  });
 
   $scope.toggleMenu = function () {
     $materialSidenav('left').toggle();
@@ -72,6 +89,9 @@ appModule = angular.module("app", ['ngMaterial'])
 
   $scope.newGroup = function () {
     //var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    if ($scope.newGroupType) {
+      $scope.newGroupType = $scope.groupTypes[0];
+    }
     var groupToAdd = japi.groups.build('open');
     groupToAdd.name = $scope.newGroupTitle;
     groupToAdd.type = $scope.newGroupType;

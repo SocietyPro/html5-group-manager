@@ -21,17 +21,18 @@
     <link rel="stylesheet" type="text/css" href="bower_components/roboto/2014/roboto-woff.css">
     <link rel="stylesheet" type="text/css" href="bower_components/sopro-material/css/sopro-material.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/pantheonGroupManager.css">
   </head>
   <body unresolved ng-app="app" ng-controller="appCtrl" tabindex="-1">
 
     <div id="applicationContainer" layout="horizontal" layout-fill>
 
-      <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left">
-        <material-toolbar class="material-theme-light">
+      <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left" layout="vertical">
+        <material-toolbar class="navToolbar">
           <h1 id="navMenuTitle" class="material-toolbar-tools">Society Pro</h1>
           <span flex></span>
         </material-toolbar>
-        <material-content flex>
+        <material-content>
           <div>
             <material-button block class="menu-item menu-sub-item" ng-repeat="group in menu.groups" ng-class="{active: menu.isGroupSelected(group)}" ng-click="menu.selectGroup(group); $event.stopImmediatePropagation()">
               <span ng-bind="group"></span>
@@ -39,30 +40,34 @@
             </material-button>
           </div>
         </material-content>
+        <span flex></span>
+        <div class="appVersion">
+          <p>Group Manager version: 0.0.1</p>
+        </div>
       </material-sidenav>
 
-      <div layout="vertical" layout-fill>
-        <material-toolbar scroll-shrink class="material-theme-dark">
+      <div layout="vertical" layout-fill class="mainContainer">
+        <material-toolbar scroll-shrink>
           <div layout="horizontal">
             <div class="material-toolbar-tools">
               <div class="menu-icon" ng-click="toggleMenu()">
-                <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_48dp.png">
+                <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_24dp.png">
               </div>
               <h2 id="toolTitle">Groups & Governance</h2>
             </div>
-            <div id="viewButtons" layout="horizontal">
-              <material-button id="streamButton" class="material-button-icon" ng-click="streamView()">
-                <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_48dp.png">
+            <div id="viewButtons" layout="horizontal" layout-align="end">
+              <material-button id="streamButton" class="viewButton material-button-icon" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" ng-click="streamView()">
+                <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png">
               </material-button>
-              <material-button id="quiltButton" class="material-button-icon" ng-click="quiltView()">
-                <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_48dp.png">
+              <material-button id="quiltButton" class="viewButton material-button-icon" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" ng-click="quiltView()">
+                <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png">
               </material-button>
             </div>
           </div>
         </material-toolbar>
         <div class="content-padding" layout="vertical" flex>
 
-          <div id="quickAddBox">
+          <material-card id="quickAddBox">
             <form name="quickAddForm" style="padding-left:20px;">
             <!--
               <material-input-group>
@@ -76,19 +81,20 @@
               size="45" 
               ng-model="newGroupTitle"
               placeholder="Add a Group..."
-              flex></material-input>
-              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
+              flex ng-click="inputClick = true"></material-input>
+              <div id="quickAddAdditional" ng-show="inputClick">
                 <div class="custom-dropdown small">
-                  <select 
-                  ng-model="newGroupType" 
-                  ng-options="groupType for groupType in groupTypes"></select>
+                  <select ng-model="newGroupType">
+                    <option value="">-- Type --</option>
+                    <option ng-repeat="groupType in groupTypes" value="{{groupType}}">{{groupType}}</option>
+                  </select>
                 </div>
-                <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
+                <material-button id="quickAddButton" class="material-button-colored" ng-show="newGroupTitle" ng-click="newGroup()">
                   SAVE
                 </material-button>
               </div>
             </form>
-          </div>
+          </material-card>
           <!-- Quick Add Box original 
           <sopro-titlebar>
               <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
@@ -111,6 +117,7 @@
               <div class="cardholder" 
               ng-repeat="group in myGroups"
               ng-mouseleave="group.overflow = false;"
+              ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
               >
                 <material-card 
                 class="groupCard" 
