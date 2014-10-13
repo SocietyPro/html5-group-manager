@@ -1,5 +1,6 @@
 .mainContainer { 
 	background: url(../assets/bg.jpg) top right no-repeat;
+	background-size: cover;
 	background-attachment: fixed;
 }
 .cardholder {
