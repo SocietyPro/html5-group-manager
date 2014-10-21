@@ -2,6 +2,10 @@
 	background: url(../assets/bg.jpg) top right no-repeat;
 	background-attachment: fixed;
 }
+.mainContainer.corps { 
+	background: url(../assets/bgCorps.jpg) top right no-repeat;
+	background-attachment: fixed;
+}
 .cardholder {
 	opacity: 0.9;
 }
