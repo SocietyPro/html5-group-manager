@@ -28,6 +28,7 @@ material-card.groupCard{
   min-height: 100px;
   min-width: 200px;
   padding: 16px 16px 0 16px;
+  width: 300px;
 }
 
 material-card.groupCard h3{
@@ -518,4 +519,8 @@ margin: 16px 0;
   vertical-align: baseline;
   color: black;
   border-bottom: 1px solid rgb(233, 233, 233);  
+}
+.positionAuto {
+  top: auto !important;
+  left: auto !important;
 }

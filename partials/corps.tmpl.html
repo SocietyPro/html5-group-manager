@@ -79,9 +79,9 @@
           scroll-y flex>
           -->
           <material-content id="contentArea" flex>
-            <div id= "myGroupsContainer" ng-if="listContains === 'myGroups'">
+            <div id= "myGroupsContainer" ng-if="listContains === 'myGroups'" masonry>
               <!-- material-card for groups -->  
-              <div class="cardholder" 
+              <div class="cardholder masonry-brick" 
               ng-repeat="group in myGroups"
               ng-mouseleave="group.overflow = false;"
               ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"

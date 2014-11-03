@@ -14,7 +14,7 @@ if(Cambrian.JAPI !== undefined && !Cambrian.isMockCambrian){
 var GROUP_TYPES = ['broadcast', 'open'];
 var CORPS_TYPES = ['corporation', 'coalition'];
 
-appModule = angular.module("app", ['ngRoute','ngMaterial'])
+appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
 .config(function($routeProvider){
   
   $routeProvider.when("/groups", {
@@ -108,10 +108,14 @@ appModule = angular.module("app", ['ngRoute','ngMaterial'])
   $scope.listView = "quilt";
 
   $scope.streamView = function () {
+    $( ".cardholder" ).css( "position","relative" );
+    $( ".cardholder" ).addClass( "positionAuto");
     $scope.listView = "stream";
   };
 
   $scope.quiltView = function () {
+    $( ".cardholder" ).css( "position","absolute" );
+    $( ".cardholder" ).removeClass( "positionAuto");
     $scope.listView = "quilt";
   };
 
@@ -423,10 +427,14 @@ appModule = angular.module("app", ['ngRoute','ngMaterial'])
   $scope.listView = "quilt";
 
   $scope.streamView = function () {
+    $( ".cardholder" ).css( "position","relative" );
+    $( ".cardholder" ).addClass( "positionAuto");
     $scope.listView = "stream";
   };
 
   $scope.quiltView = function () {
+    $( ".cardholder" ).css( "position","absolute" );
+    $( ".cardholder" ).removeClass( "positionAuto");
     $scope.listView = "quilt";
   };
 

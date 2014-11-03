@@ -80,9 +80,9 @@
           scroll-y flex>
           -->
           <material-content id="contentArea" flex>
-            <div id= "myGroupsContainer" ng-if="listContains === 'myGroups'">
+            <div id= "myGroupsContainer" ng-if="listContains === 'myGroups'" masonry>
               <!-- material-card for groups -->  
-              <div class="cardholder" 
+              <div class="cardholder masonry-brick" 
               ng-repeat="group in myGroups track by $index"
               ng-mouseleave="group.overflow = false;"
               ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
@@ -123,7 +123,7 @@
                   ng-click="deleteGroup(group)">Delete Group</a>
                 </material-card>
               </div>
-               <div class="cardholder" 
+               <div class="cardholder masonry-brick" 
               ng-repeat="group in invites track by $index"
               ng-mouseleave="group.overflow = false;"
               ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
