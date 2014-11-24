@@ -1,137 +1,132 @@
 <!-- STYLES AT END OF TEMPLATE -->
-<material-dialog>
-  <div layout="vertical" class="dialog-content">
-    <material-tabs selected="selectedIndex" center>
-        <material-tab label="Corporate Rulescape"></material-tab>
-        <material-tab label="Add Member"></material-tab>
-    </material-tabs>
-    <div class="animate-switch-container" ng-switch on="selectedIndex">
-        <div class="animate-switch tab1" ng-switch-when="0" material-swipe-left="next()" material-swipe-right="previous()" ng-init="data.cb1 = true">
-          <div layout="horizontal" class="rulesLine">
-            <material-checkbox ng-model="data.cb1" aria-label="Checkbox 1"></material-checkbox>
-            <p>require directors to post bond of </p>
-            <material-input class="rulesInput ruleInput" type="text" size="5" value="100"></material-input>
-            <p flex> bitcoin.</p>
-          </div>
-          <!-- -->
-          <div layout="horizontal" class="rulesLine">
-            <material-checkbox ng-model="data.cb1" aria-label="Checkbox 1"></material-checkbox>
-            <p>allow directors to vote out CEO with </p>
-            <material-input class="rulesInput ruleInput" type="text" size="5" value="2"></material-input>
-            <p> of </p>
-            <material-input class="rulesInput ruleInput" type="text" size="5" value="5"></material-input>
-            <p flex> vote.</p>
-          </div>
-          <!-- -->
-          <div layout="horizontal" class="rulesLine">
-            <material-checkbox ng-model="data.cb3" aria-label="Checkbox 1"></material-checkbox>
-            <p>members elect directors every </p>
-            <material-input class="rulesInput ruleInput" type="text" size="5" value="30"></material-input>
-            <p flex>days </p>
-          </div>
-          <!-- -->
-          <div layout="horizontal" class="rulesLine">
-            <material-checkbox ng-model="data.cb4" aria-label="Checkbox 1"></material-checkbox>
-            <p flex>allow CEO to unilaterally remove directors.</p>
-          </div>
-          <div class="rulesLine" ng-repeat="rule in group.rules" layout="horizontal"
-          ng-class="{focused: rule.hasFocus}" ng-mouseover="rule.menubar = true" ng-mouseleave="rule.menubar = false">
-            <material-checkbox ng-model="rule.isSelected"></material-checkbox>
-            <material-input type="text" class="rulesInput" ng-model="rule.text" flex placeholder="New Rule (click to edit)"  id="{{'rule'+$index}}" ng-keypress="keypressListener($event)" ng-focus="rule.hasFocus = true" ng-blur="rule.hasFocus = false" ng-keyup="checkForRuleDelete($event,$index)" ></material-input>
-            <material-button ng-show="rule.menubar" ng-click="removeRule($index)" title="Remove Rule"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
-          </div>
-          <div class="newRuleWrapper" ng-class="{focused: newRuleFocused}">
-            <material-input type="text" id="addRuleInput" ng-model="newRuleText" ng-change="newRuleText = addRule(newRuleText)" placeholder="Add Rule" ng-focus="newRuleFocused = true" ng-blur="newRuleFocused = false"></material-input>
+<md-dialog layout="vertical">
+  <md-content flex>
+    <md-tabs md-selected="data.selectedIndex">
+      <md-tab>
+        <md-tab-label>
+          {{tabs[0].title}}
+        </md-tab-label>
+        <div layout="horizontal" class="rulesLine">
+          <md-checkbox ng-model="data1" aria-label="Checkbox 1"></md-checkbox>
+          <p>require directors to post bond of </p>
+          <md-input class="rulesInput ruleInput" type="text" size="5" value="100"></md-input>
+          <p flex> bitcoin.</p>
+        </div>
+        <!-- -->
+        <div layout="horizontal" class="rulesLine">
+          <md-checkbox ng-model="data2" aria-label="Checkbox 1"></md-checkbox>
+          <p>allow directors to vote out CEO with </p>
+          <md-input class="rulesInput ruleInput" type="text" size="5" value="2"></md-input>
+          <p> of </p>
+          <md-input class="rulesInput ruleInput" type="text" size="5" value="5"></md-input>
+          <p flex> vote.</p>
+        </div>
+        <!-- -->
+        <div layout="horizontal" class="rulesLine">
+          <md-checkbox ng-model="data3" aria-label="Checkbox 1"></md-checkbox>
+          <p>members elect directors every </p>
+          <md-input class="rulesInput ruleInput" type="text" size="5" value="30"></md-input>
+          <p flex>days </p>
+        </div>
+        <!-- -->
+        <div layout="horizontal" class="rulesLine">
+          <md-checkbox ng-model="data4" aria-label="Checkbox 1"></md-checkbox>
+          <p flex>allow CEO to unilaterally remove directors.</p>
+        </div>
+        <div class="rulesLine" ng-repeat="rule in group.rules" layout="horizontal"
+        ng-class="{focused: rule.hasFocus}" ng-mouseover="rule.menubar = true" ng-mouseleave="rule.menubar = false">
+          <md-checkbox ng-model="rule.isSelected"></md-checkbox>
+          <md-input type="text" class="rulesInput" ng-model="rule.text" flex placeholder="New Rule (click to edit)"  id="{{'rule'+$index}}" ng-keypress="keypressListener($event)" ng-focus="rule.hasFocus = true" ng-blur="rule.hasFocus = false" ng-keyup="checkForRuleDelete($event,$index)" ></md-input>
+          <md-button ng-show="rule.menubar" ng-click="removeRule($index)" title="Remove Rule"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></md-button>
+        </div>
+        <div class="newRuleWrapper" ng-class="{focused: newRuleFocused}">
+          <md-input type="text" id="addRuleInput" ng-model="newRuleText" ng-change="newRuleText = addRule(newRuleText)" placeholder="Add Rule" ng-focus="newRuleFocused = true" ng-blur="newRuleFocused = false"></md-input>
+        </div>
+      </md-tab>
+      <md-tab>
+        <md-tab-label>
+          {{tabs[1].title}}
+        </md-tab-label>
+        <div layout="horizontal" id="groupDialogCaption">
+          <md-input-group>
+            <label 
+            for="groupName"
+            >Group Name</label>
+
+            <md-input 
+            name="groupName" 
+            id="groupName" 
+            type="text" 
+            size="45" 
+            ng-model="group.name"
+            ></md-input>
+          </md-input-group>
+          <span flex></span>
+          <div layout="horizontal" layout-align="center center">
+            <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
+            <span>{{group.members}}</span>
           </div>
         </div>
-        <div class="animate-switch tab2" ng-switch-when="1" material-swipe-left="next()" material-swipe-right="previous()">
-          <div layout="horizontal" id="groupDialogCaption">
-            <material-input-group>
-              <label 
-              for="groupName"
-              >Group Name</label>
-
-              <material-input 
-              name="groupName" 
-              id="groupName" 
-              type="text" 
-              size="45" 
-              ng-model="group.name"
-              ></material-input>
-            </material-input-group>
-            <span flex></span>
-            <div layout="horizontal" layout-align="center center">
-              <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
-              <span>{{group.members}}
-            </div>
-          </div>
-
-          
-
-          
-
-          <div flex layout="horizontal">
-            <section flex="50" class="members" layout="vertical">
-              <span block class="sectionTitle">Group Members</span>
-              <material-list flex>
-                <material-item 
-                ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
-                class="membersAnimate"
-                layout="horizontal"
+        <div flex layout="horizontal">
+          <section flex="50" class="members" layout="vertical">
+            <span block class="sectionTitle">Group Members</span>
+            <md-list flex>
+              <md-item 
+              ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
+              class="membersAnimate"
+              layout="horizontal"
+              >
+                <span flex>{{member.name || member.id }}</span>
+                <img 
+                src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
+                ng-click="group.removePeer(member)"
                 >
-                  <span flex>{{member.name || member.id }}</span>
-                  <img 
-                  src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
-                  ng-click="group.removePeer(member)"
-                  >
-                </material-item>
-              </material-list>
-              <!--
-              <material-button block class="material-button-raised">Remove</material-button>
-              -->
-            </section>
-            <section flex="50" class="peers" layout="vertical">
-              <span block class="sectionTitle">Other Peers</span>
-              <material-list flex>
-                <material-item 
-                ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
-                class="peersAnimate"
-                layout="horizontal"
+              </md-item>
+            </md-list>
+            <!--
+            <md-button block class="md-button-raised">Remove</md-button>
+            -->
+          </section>
+          <section flex="50" class="peers" layout="vertical">
+            <span block class="sectionTitle">Other Peers</span>
+            <md-list flex>
+              <md-item 
+              ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
+              class="peersAnimate"
+              layout="horizontal"
+              >
+                <img 
+                src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
+                ng-click="group.addPeer(peer)"
                 >
-                  <img 
-                  src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
-                  ng-click="group.addPeer(peer)"
-                  >
-                  <span flex>{{peer.name || peer.id }}</span>
-                </material-item>
-              </material-list>
-              <!--
-              <material-button block class="material-button-raised">Add to Group</material-button>
-              -->
-            </section>
-          </div>
+                <span flex>{{peer.name || peer.id }}</span>
+              </md-item>
+            </md-list>
+            <!--
+            <md-button block class="md-button-raised">Add to Group</md-button>
+            -->
+          </section>
         </div>
-    </div>
-  
-    
-    
-  </div>
-  <footer class="dialog-actions" layout="horizontal" layout-end="end center">
-    <material-button ng-click="close()">
+      </md-tab>
+    </md-tabs>
+  </md-content>
+  <div class="md-actions" layout="horizontal" layout-end="end center">
+    <md-button ng-click="close()">
       Close
-    </material-button>
-    <material-button ng-click="save(group)" class="material-button-colored">
+    </md-button>
+    <md-button ng-click="save(group)" class="md-primary">
       Save
-    </material-button>
-  </footer>
-</material-dialog>
+    </md-button>
+  </div>
+</md-dialog>
 
 
 <style>
 /* Some of these have !important because they are are overriding 
-angular's material style defaults */
-.material-dialog-container material-dialog{
+angular's md style defaults */
+.md-dialog-container md-dialog{
   min-width: 400px !important;
+  min-height: 60%;
   border-radius: 0px !important;
 }
 .dialog-content{
@@ -172,12 +167,12 @@ section.peers {
   overflow-x: visible;
   margin-top: 8px;
 }
-.dialog-content section material-list{
+.dialog-content section md-list{
   overflow-y: auto;
   overflow-x: visible;
 }
 
-.dialog-content material-list material-item {
+.dialog-content md-list md-item {
   overflow-x: hidden;
   min-height: 56px;
   line-height: 24px;
@@ -185,17 +180,17 @@ section.peers {
   font-weight: bold;
 }
 
-.dialog-content section material-button.material-button-raised {
+.dialog-content section md-button.md-button-raised {
   min-height: 40px;
   line-height: 24px;
   background-color: white;
   margin: 4px 24px 4px 24px;
 }
 
-material-dialog footer {
+md-dialog footer {
   min-height: 64px !important;
 }
-material-dialog footer material-button{
+md-dialog footer md-button{
   font-size: 1.6em;
   margin-left: 32px;
 }

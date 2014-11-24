@@ -46,7 +46,7 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
   };
 
 }])
-.controller("groupsCtrl", function ($scope, $materialSidenav, $materialDialog, menu, $rootScope) {
+.controller("groupsCtrl", function ($scope, $mdSidenav, $mdDialog, menu, $rootScope, $timeout) {
   
   $scope.menu = menu;
   $scope.menu.selectGroup(menu.groups[0]);
@@ -101,21 +101,38 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
     }
   });
 
+  $scope.reloadMasonry = true;
+  var reloadM = function () {
+    $scope.reloadMasonry = false;
+    $timeout(function () {
+      $scope.reloadMasonry = true;
+    },25); 
+  }
+
+  $scope.safeApply = function(fn) {
+    var phase = $rootScope.$$phase;
+    if(phase == '$apply' || phase == '$digest') {
+      if(fn && (typeof(fn) === 'function')) {
+        fn();
+      }
+    } else {
+      this.$apply(fn);
+    }
+  };
+
   $scope.toggleMenu = function () {
-    $materialSidenav('left').toggle();
+    $mdSidenav('left').toggle();
   };
 
   $scope.listView = "quilt";
 
   $scope.streamView = function () {
-    $( ".cardholder" ).css( "position","relative" );
-    $( ".cardholder" ).addClass( "positionAuto");
+    $scope.safeApply(reloadM);
     $scope.listView = "stream";
   };
 
   $scope.quiltView = function () {
-    $( ".cardholder" ).css( "position","absolute" );
-    $( ".cardholder" ).removeClass( "positionAuto");
+    $scope.safeApply(reloadM);
     $scope.listView = "quilt";
   };
 
@@ -137,6 +154,12 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
     $scope.newGroupTitle = "";
     $scope.quickAddForm.$setPristine();
     $scope.dialog(e, groupToAdd);
+  };
+
+  $scope.newGroupFromScratch = function () {
+    //var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    var groupToAdd = japi.groups.build('open');
+    $scope.dialog(null, groupToAdd);
   };
 
   $scope.duplicateGroup = function (e,group) {
@@ -164,10 +187,10 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
   };
 
   $scope.dialog = function (e, group) {
-    $materialDialog({
+    $mdDialog.show({
       templateUrl: 'partials/editGroupCard.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
+      controller: ['$scope', '$mdDialog', function ($scope, $mdDialog) {
         $scope.group = group;
         $scope.japi = japi;
         $scope.newGroupType = group.type;
@@ -185,22 +208,20 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
           return true; // this nonmember should be shown
         };
         $scope.close = function () {
-          $hideDialog();
+          $mdDialog.hide();
         };
 
         $scope.save = function (group) {
           group.save()
-          $hideDialog();
+          $mdDialog.hide();
         };
       }]
     });
   };
 
 })
-.controller("corpsCtrl", function ($scope, $materialSidenav, $materialDialog, menu, $rootScope) {
+.controller("corpsCtrl", function ($scope, $mdSidenav, $mdDialog, menu, $rootScope ,$timeout) {
   
-  $scope.menu = menu;
-  $scope.menu.selectGroup(menu.groups[0]);
   document.title = "Corps and Coalitions";
   $scope.myPeers = japi.me.peers;
   $scope.newGroupType = 'corporation';
@@ -396,7 +417,6 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
   for (var i=0; i < $scope.myGroups.length; i++) {
     $scope.myGroups[i].isActive = false;
   };
-
   /*
   for (var i=0; i < $scope.myPeerLists.length; i++) {
     $scope.myGroups.isActive[i] = false;
@@ -410,7 +430,7 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
     {
       var exists = ($('#quickAddBox').length === 1)
       if (exists) {
-        $scope.$apply(function() {
+        $scope.safeApply(function() {
           $scope.inputClick = false;
           $scope.newGroupType = "";
           $scope.newGroupTitle = "";
@@ -420,21 +440,38 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
     }
   });
 
+  $scope.reloadMasonry = true;
+  var reloadM = function () {
+    $scope.reloadMasonry = false;
+    $timeout(function () {
+      $scope.reloadMasonry = true;
+    },25); 
+  }
+
+  $scope.safeApply = function(fn) {
+    var phase = $rootScope.$$phase;
+    if(phase == '$apply' || phase == '$digest') {
+      if(fn && (typeof(fn) === 'function')) {
+        fn();
+      }
+    } else {
+      this.$apply(fn);
+    }
+  };
+
   $scope.toggleMenu = function () {
-    $materialSidenav('left').toggle();
+    $mdSidenav('left').toggle();
   };
 
   $scope.listView = "quilt";
 
   $scope.streamView = function () {
-    $( ".cardholder" ).css( "position","relative" );
-    $( ".cardholder" ).addClass( "positionAuto");
+    $scope.safeApply(reloadM);
     $scope.listView = "stream";
   };
 
   $scope.quiltView = function () {
-    $( ".cardholder" ).css( "position","absolute" );
-    $( ".cardholder" ).removeClass( "positionAuto");
+    $scope.safeApply(reloadM);
     $scope.listView = "quilt";
   };
 
@@ -455,6 +492,12 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
     $scope.myGroups.push(groupToAdd);
     $scope.newGroupTitle = "corporation";
     $scope.quickAddForm.$setPristine();
+    $scope.dialog(null, groupToAdd);
+  };
+
+  $scope.newGroupFromScratch = function () {
+    //var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    var groupToAdd = japi.groups.build('open');
     $scope.dialog(null, groupToAdd);
   };
 
@@ -481,10 +524,10 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
   };
 
   $scope.dialog = function (e, group) {
-    $materialDialog({
+    $mdDialog.show({
       templateUrl: 'partials/editCorpCard.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog','$rootScope','$timeout', function ($scope, $hideDialog, $rootScope,$timeout) {
+      controller: ['$scope', '$mdDialog','$rootScope','$timeout', function ($scope, $mdDialog, $rootScope,$timeout) {
         $scope.group = group;
         $scope.japi = japi;
         $scope.newGroupType = group.type;
@@ -492,7 +535,29 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
         $scope.groupTypes = GROUP_TYPES;
         $scope.newGroupTitle = group.name;
 
-        function resizeInput() {
+        var tabs = [
+          { title: 'Corporate Rulescape',
+            index: 0},
+          { title: 'Add Member',
+            index: 1}
+        ];
+
+        $scope.tabs = tabs;
+        $scope.data = {
+          selectedIndex : 0,
+          secondLocked : true,
+          secondLabel : "Item Two"
+        };
+
+        $scope.next = function() {
+          $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
+        };
+
+        $scope.previous = function() {
+          $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
+        };
+
+        /*function resizeInput() {
             $(this).attr('size', $(this).val().length);
         }
 
@@ -504,9 +569,9 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
 
         $timeout(function () {
           $("#addRuleInput").focus();
-        }); 
+        });*/ 
 
-        $scope.keypressListener = function (event) {
+        /*$scope.keypressListener = function (event) {
           if (event.charCode == 13) {
             $timeout(function () {
               $("#addRuleInput").focus();
@@ -551,7 +616,7 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
             document.getElementById(id).focus();
           });
           return "";
-        };
+        };*/
 
         // Filter to display only nonMembers:
         $scope.nonMembers = function(peer){
@@ -563,7 +628,7 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
           return true; // this nonmember should be shown
         };
         $scope.close = function () {
-          $hideDialog();
+          $mdDialog.hide();
         };
 
         $scope.save = function (group) {
@@ -573,7 +638,7 @@ appModule = angular.module("app", ['ngRoute','ngMaterial','wu.masonry'])
               group.rules.splice(i,1);
             }
           }
-          $hideDialog();
+          $mdDialog.hide();
         };
       }]
     });
